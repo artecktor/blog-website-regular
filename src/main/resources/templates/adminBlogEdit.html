@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش بلاگ — درنگ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Vazirmatn:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin-style.css">
+    <script> (function () {
+        try {
+            const saved = localStorage.getItem("derang-theme");
+            const theme = saved || "light";
+            document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    })(); </script>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+</div>
+
+<header class="site-header">
+    <div class="header-inner admin-header-inner">
+        <a href="http://localhost:8080/admin" class="logo">
+            <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 1.5 C12.6 7.8 14.2 9.4 20.5 10 C14.2 10.6 12.6 12.2 12 18.5 C11.4 12.2 9.8 10.6 3.5 10 C9.8 9.4 11.4 7.8 12 1.5 Z"/>
+            </svg>
+            درنگ
+            <span class="admin-badge">مدیریت</span>
+        </a>
+
+        <div class="header-right admin-header-actions">
+            <button class="search-trigger" type="button" id="search-trigger" aria-label="جستجوی سریع"
+                    onclick="window.location.href='http://localhost:8080/search?focus=1'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M21 21l-4.3-4.3"/>
+                </svg>
+                <span class="search-trigger-label">جستجو</span>
+                <kbd class="search-kbd">⌘K</kbd>
+            </button>
+
+            <button class="theme-toggle" type="button" id="theme-toggle" aria-label="تغییر پوسته">
+                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7">
+                    <circle cx="12" cy="12" r="4.2"/>
+                    <path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+                </svg>
+                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7">
+                    <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/>
+                </svg>
+            </button>
+
+            <a href="http://localhost:8080/admin/blogs" class="admin-exit-link">
+                <span>بازگشت به لیست بلاگ‌ها</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M15 5 L8 12 L15 19"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <!-- ================= EDITOR PANEL ================= -->
+    <section class="editor-panel">
+        <div class="editor-panel-inner">
+
+            <form id="blog-form" action="http://localhost:8080/blogs" method="post">
+                <input type="hidden" name="id" id="f-id">
+
+                <div class="editor-panel-head">
+                    <h2 class="section-title" id="editor-heading">بلاگ جدید</h2>
+                    <div class="editor-panel-actions">
+                        <button class="btn btn-ghost" type="button" id="toggle-preview-btn">
+                            پنهان کردن پیش‌نمایش
+                        </button>
+                        <button class="btn btn-primary" type="submit">
+                            ذخیره بلاگ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="editor-fields">
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="f-title">عنوان</label>
+                            <input type="text" id="f-title" name="title" placeholder="عنوان بلاگ" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="f-author">نویسنده</label>
+                            <input type="text" id="f-author" name="author" placeholder="نام نویسنده" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="f-category">دسته‌بندی</label>
+                            <div class="select-field">
+                                <select id="f-category">
+                                    <option value="">بدون دسته‌بندی</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label>وضعیت انتشار</label>
+                            <div class="status-segment" id="status-segment"></div>
+                            <input type="hidden" name="status" id="f-status" value="DRAFT">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label-row">
+                            <label for="f-slug">نشانی یکتا (slug)</label>
+                            <button class="field-link" type="button" id="regenerate-slug-btn">ساخت دوباره از عنوان</button>
+                        </div>
+                        <input type="text" id="f-slug" name="slug" dir="auto" placeholder="مثلاً why-build-slower">
+                        <p class="field-hint">به‌طور خودکار از عنوان ساخته می‌شود. این مقدار باید برای هر بلاگ یکتا باشد.</p>
+                    </div>
+
+                    <div class="form-field">
+                        <label>برچسب‌ها <span class="label-count" id="tag-selected-count">(۰)</span></label>
+                        <div class="tag-picker">
+                            <input type="text" id="tag-search" placeholder="جستجو در برچسب‌ها…" autocomplete="off">
+                            <div class="tag-picker-options" id="tag-options"></div>
+                        </div>
+                        <div id="tag-inputs"></div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="f-image">آدرس تصویر</label>
+                        <input type="text" id="f-image" name="imageAddress" dir="ltr" placeholder="https://...">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="f-description">توضیح کوتاه</label>
+                        <textarea id="f-description" name="description" rows="2" placeholder="یک یا دو جمله معرفی بلاگ"></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="f-content">متن کامل بلاگ</label>
+                        <textarea id="f-content" name="content" rows="10" placeholder="متن کامل بلاگ را اینجا بنویسید…" required></textarea>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+    <!-- ================= LIVE PREVIEW (mirrors blog.html) ================= -->
+    <div id="preview-wrap">
+        <p class="preview-label" id="preview-label">پیش‌نمایش زنده</p>
+
+        <article class="post-page">
+            <div class="post-page-head">
+
+                <div class="post-meta-row">
+                    <p class="post-meta">
+                        <span id="pv-author">نویسنده</span>
+                        <span> · </span>
+                        <span id="pv-time">۰</span>
+                        <span> دقیقه مطالعه</span>
+                    </p>
+
+                    <span class="post-category" id="pv-category" hidden>
+                        <svg class="post-category-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 1.5 C12.6 7.8 14.2 9.4 20.5 10 C14.2 10.6 12.6 12.2 12 18.5 C11.4 12.2 9.8 10.6 3.5 10 C9.8 9.4 11.4 7.8 12 1.5 Z"/>
+                        </svg>
+                        <span class="post-category-label">دسته‌بندی</span>
+                        <span class="post-category-sep" aria-hidden="true"></span>
+                        <span class="post-category-name" id="pv-category-name"></span>
+                    </span>
+                </div>
+
+                <h1 class="post-page-title" id="pv-title">عنوان بلاگ</h1>
+                <p class="post-page-lead" id="pv-lead">توضیح کوتاه بلاگ اینجا نمایش داده می‌شود.</p>
+            </div>
+
+            <div class="post-hero">
+                <img id="pv-image" alt="" src="">
+            </div>
+
+            <div class="post-body" id="pv-body">
+                <p class="post-body-placeholder">متن بلاگ را در فرم بالا بنویسید تا اینجا نمایش داده شود.</p>
+            </div>
+
+            <div class="post-taxonomy" id="pv-taxonomy" hidden>
+                <div class="taxonomy-head">
+                    <span class="taxonomy-title">برچسب‌ها</span>
+                    <span class="taxonomy-rule" aria-hidden="true"></span>
+                </div>
+                <div class="tag-list" id="pv-tags"></div>
+            </div>
+        </article>
+    </div>
+
+</main>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="جستجوی سریع">
+        <div class="cmdk-input-wrap">
+            <svg class="cmdk-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="M21 21l-4.3-4.3"/>
+            </svg>
+            <input type="text" id="cmdk-input" class="cmdk-input" placeholder="جستجو در بخش‌های مدیریت…"
+                   autocomplete="off">
+            <kbd class="cmdk-esc">Esc</kbd>
+        </div>
+        <div class="cmdk-list" id="cmdk-list"></div>
+    </div>
+</div>
+
+<footer class="site-footer admin-footer">
+    <div class="footer-bottom admin-footer-bottom">
+        <div class="admin-footer-brand">
+            <svg class="logo-mark small" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 1.5 C12.6 7.8 14.2 9.4 20.5 10 C14.2 10.6 12.6 12.2 12 18.5 C11.4 12.2 9.8 10.6 3.5 10 C9.8 9.4 11.4 7.8 12 1.5 Z"/>
+            </svg>
+            <span>پنل مدیریت درنگ</span>
+        </div>
+        <p>© ۱۴۰۵ درنگ. دسترسی محدود به مدیران سایت.</p>
+    </div>
+</footer>
+
+<script>
+    const editId = new URLSearchParams(window.location.search).get("id");
+
+    // The values must match your Status enum. Change them here if yours are different.
+    const STATUS_OPTIONS = [
+        {value: "DRAFT", label: "پیش‌نویس"},
+        {value: "PUBLISHED", label: "منتشر شده"}
+    ];
+
+    const fTitle = document.getElementById("f-title");
+    const fAuthor = document.getElementById("f-author");
+    const fImage = document.getElementById("f-image");
+    const fDescription = document.getElementById("f-description");
+    const fContent = document.getElementById("f-content");
+
+    const categorySelect = document.getElementById("f-category");
+    const statusInput = document.getElementById("f-status");
+    const slugInput = document.getElementById("f-slug");
+    const tagSearchInput = document.getElementById("tag-search");
+
+    let allCategories = [];
+    let allTags = [];
+    let selectedTagIds = [];
+    let slugWasEditedByHand = false;
+
+    /* =====================================================
+       Small helpers
+    ===================================================== */
+
+    function findById(list, id) {
+        for (let i = 0; i < list.length; i++) {
+            if (String(list[i].id) === String(id)) {
+                return list[i];
+            }
+        }
+        return null;
+    }
+
+    function addIfMissing(list, item) {
+        if (findById(list, item.id) === null) {
+            list.push(item);
+        }
+    }
+
+    function makeSlug(text) {
+        return text
+            .trim()
+            .toLowerCase()
+            .replace(/ي/g, "ی")
+            .replace(/ك/g, "ک")
+            .replace(/[\u200c\s_]+/g, "-")
+            .replace(/[^a-z0-9\u0621-\u064A\u0670-\u06D3\u06F0-\u06F9-]/g, "")
+            .replace(/-+/g, "-")
+            .replace(/^-|-$/g, "");
+    }
+
+    /* =====================================================
+       Loading categories and tags
+    ===================================================== */
+
+    async function loadCategoriesAndTags() {
+        let categories = [];
+        let tags = [];
+
+        try {
+            const categoriesResponse = await fetch("http://localhost:8080/categories");
+            if (categoriesResponse.ok) {
+                const data = await categoriesResponse.json();
+                if (Array.isArray(data)) categories = data;
+            }
+        } catch (error) {
+        }
+
+        try {
+            const tagsResponse = await fetch("http://localhost:8080/tags");
+            if (tagsResponse.ok) {
+                const data = await tagsResponse.json();
+                if (Array.isArray(data)) tags = data;
+            }
+        } catch (error) {
+        }
+
+        // If those endpoints don't exist, use the categories and tags that existing blogs already have.
+        if (categories.length === 0 || tags.length === 0) {
+            const categoriesFromBlogs = [];
+            const tagsFromBlogs = [];
+
+            try {
+                const blogs = await fetch("http://localhost:8080/blogs").then(res => res.json());
+
+                for (let i = 0; i < blogs.length; i++) {
+                    if (blogs[i].category) {
+                        addIfMissing(categoriesFromBlogs, blogs[i].category);
+                    }
+                    if (blogs[i].tags) {
+                        for (let j = 0; j < blogs[i].tags.length; j++) {
+                            addIfMissing(tagsFromBlogs, blogs[i].tags[j]);
+                        }
+                    }
+                }
+            } catch (error) {
+            }
+
+            if (categories.length === 0) categories = categoriesFromBlogs;
+            if (tags.length === 0) tags = tagsFromBlogs;
+        }
+
+        allCategories = categories;
+        allTags = tags;
+    }
+
+    /* =====================================================
+       Rendering the form controls
+    ===================================================== */
+
+    function renderCategoryOptions() {
+        const previousValue = categorySelect.value;
+        categorySelect.innerHTML = `<option value="">بدون دسته‌بندی</option>`;
+
+        for (let i = 0; i < allCategories.length; i++) {
+            const option = document.createElement("option");
+            option.value = allCategories[i].id;
+            option.textContent = allCategories[i].name;
+            categorySelect.appendChild(option);
+        }
+
+        categorySelect.value = previousValue;
+    }
+
+    function renderStatusSegment() {
+        const segment = document.getElementById("status-segment");
+        segment.innerHTML = "";
+
+        for (let i = 0; i < STATUS_OPTIONS.length; i++) {
+            const statusOption = STATUS_OPTIONS[i];
+            const button = document.createElement("button");
+
+            button.type = "button";
+            button.className = "status-option";
+            if (statusInput.value === statusOption.value) {
+                button.classList.add("is-active");
+            }
+            button.dataset.value = statusOption.value;
+            button.textContent = statusOption.label;
+
+            button.addEventListener("click", function () {
+                statusInput.value = statusOption.value;
+                renderStatusSegment();
+                updatePreview();
+            });
+
+            segment.appendChild(button);
+        }
+    }
+
+    function renderTagOptions() {
+        const container = document.getElementById("tag-options");
+        const searchText = tagSearchInput.value.trim().toLowerCase();
+        container.innerHTML = "";
+
+        let shownCount = 0;
+
+        for (let i = 0; i < allTags.length; i++) {
+            const tag = allTags[i];
+
+            if (searchText !== "" && tag.name.toLowerCase().indexOf(searchText) === -1) {
+                continue;
+            }
+
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "tag-option";
+            if (selectedTagIds.indexOf(tag.id) !== -1) {
+                button.classList.add("is-selected");
+            }
+            button.innerHTML = `<b>#</b>`;
+            button.appendChild(document.createTextNode(tag.name));
+
+            button.addEventListener("click", function () {
+                toggleTag(tag.id);
+            });
+
+            container.appendChild(button);
+            shownCount++;
+        }
+
+        if (shownCount === 0) {
+            container.innerHTML = `<p class="tag-empty">برچسبی پیدا نشد.</p>`;
+        }
+
+        document.getElementById("tag-selected-count").innerText =
+            "(" + selectedTagIds.length.toLocaleString("fa-IR") + ")";
+    }
+
+    function toggleTag(tagId) {
+        const position = selectedTagIds.indexOf(tagId);
+
+        if (position === -1) {
+            selectedTagIds.push(tagId);
+        } else {
+            selectedTagIds.splice(position, 1);
+        }
+
+        renderTagOptions();
+        rebuildTagInputs();
+        updatePreview();
+    }
+
+    // Each selected tag becomes a hidden field: tags[0].id, tags[1].id, ...
+    function rebuildTagInputs() {
+        const container = document.getElementById("tag-inputs");
+        container.innerHTML = "";
+
+        for (let i = 0; i < selectedTagIds.length; i++) {
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "tags[" + i + "].id";
+            hiddenInput.value = selectedTagIds[i];
+            container.appendChild(hiddenInput);
+        }
+    }
+
+    /* =====================================================
+       Live preview
+    ===================================================== */
+
+    function updatePreview() {
+        document.getElementById("pv-title").innerText = fTitle.value || "عنوان بلاگ";
+        document.getElementById("pv-author").innerText = fAuthor.value || "نویسنده";
+        document.getElementById("pv-lead").innerText = fDescription.value || "توضیح کوتاه بلاگ اینجا نمایش داده می‌شود.";
+        document.getElementById("pv-image").src = fImage.value || "";
+
+        const content = fContent.value;
+        document.getElementById("pv-body").innerText = content ||
+            "متن بلاگ را در فرم بالا بنویسید تا اینجا نمایش داده شود.";
+
+        const readingTime = content ? Math.ceil(content.length / 1200) : 0;
+        document.getElementById("pv-time").innerText = readingTime.toLocaleString("fa-IR");
+
+        // Category badge
+        const selectedCategory = findById(allCategories, categorySelect.value);
+        const categoryBadge = document.getElementById("pv-category");
+
+        if (selectedCategory) {
+            document.getElementById("pv-category-name").innerText = selectedCategory.name;
+            categoryBadge.hidden = false;
+        } else {
+            categoryBadge.hidden = true;
+        }
+
+        // Tags box
+        const tagList = document.getElementById("pv-tags");
+        tagList.innerHTML = "";
+
+        for (let i = 0; i < selectedTagIds.length; i++) {
+            const tag = findById(allTags, selectedTagIds[i]);
+            if (!tag) continue;
+
+            const chip = document.createElement("span");
+            chip.className = "tag-chip";
+            chip.innerHTML = `<span class="tag-hash" aria-hidden="true">#</span>`;
+            chip.appendChild(document.createTextNode(tag.name));
+            tagList.appendChild(chip);
+        }
+
+        document.getElementById("pv-taxonomy").hidden = tagList.children.length === 0;
+
+        // Status in the preview label
+        let statusLabel = "";
+        for (let i = 0; i < STATUS_OPTIONS.length; i++) {
+            if (STATUS_OPTIONS[i].value === statusInput.value) {
+                statusLabel = STATUS_OPTIONS[i].label;
+            }
+        }
+        document.getElementById("preview-label").innerText = "پیش‌نمایش زنده · " + statusLabel;
+    }
+
+    [fTitle, fAuthor, fImage, fDescription, fContent].forEach(el =>
+        el.addEventListener("input", updatePreview)
+    );
+
+    categorySelect.addEventListener("change", updatePreview);
+    tagSearchInput.addEventListener("input", renderTagOptions);
+
+    /* =====================================================
+       Slug
+    ===================================================== */
+
+    // Follow the title until the slug is typed by hand.
+    fTitle.addEventListener("input", function () {
+        if (!slugWasEditedByHand) {
+            slugInput.value = makeSlug(fTitle.value);
+        }
+    });
+
+    slugInput.addEventListener("input", function () {
+        // Clearing the field lets it follow the title again.
+        slugWasEditedByHand = slugInput.value.trim() !== "";
+    });
+
+    document.getElementById("regenerate-slug-btn").addEventListener("click", function () {
+        slugInput.value = makeSlug(fTitle.value);
+        slugWasEditedByHand = false;
+    });
+
+    /* =====================================================
+       Loading an existing blog (edit mode)
+    ===================================================== */
+
+    async function loadExistingBlog() {
+        if (!editId) {
+            document.getElementById("f-id").disabled = true;
+            return;
+        }
+
+        document.getElementById("editor-heading").innerText = "ویرایش بلاگ";
+        document.getElementById("f-id").value = editId;
+
+        const blog = await fetch("http://localhost:8080/blogs/" + editId).then(res => res.json());
+
+        fTitle.value = blog.title || "";
+        fAuthor.value = blog.author || "";
+        fImage.value = blog.imageAddress || "";
+        fDescription.value = blog.description || "";
+        fContent.value = blog.content || "";
+
+        slugInput.value = blog.slug || "";
+        slugWasEditedByHand = slugInput.value !== "";
+
+        statusInput.value = blog.status || "DRAFT";
+        categorySelect.value = blog.category ? blog.category.id : "";
+
+        selectedTagIds = [];
+        if (blog.tags) {
+            for (let i = 0; i < blog.tags.length; i++) {
+                selectedTagIds.push(blog.tags[i].id);
+            }
+        }
+    }
+
+    /* =====================================================
+       Saving
+    ===================================================== */
+
+    document.getElementById("blog-form").addEventListener("submit", function () {
+        // The category field is only sent when one is chosen, so "no category" does not become a blank id.
+        categorySelect.name = categorySelect.value ? "category.id" : "";
+
+        // The slug is required by the database, so never send it empty.
+        if (slugInput.value.trim() === "") {
+            slugInput.value = makeSlug(fTitle.value) || "post-" + Date.now();
+        }
+    });
+
+    document.getElementById("toggle-preview-btn").addEventListener("click", (e) => {
+        const wrap = document.getElementById("preview-wrap");
+        const hidden = wrap.classList.toggle("is-hidden");
+        e.target.innerText = hidden ? "نمایش پیش‌نمایش" : "پنهان کردن پیش‌نمایش";
+    });
+
+    /* =====================================================
+       Start
+    ===================================================== */
+
+    async function startEditor() {
+        await loadCategoriesAndTags();
+        renderCategoryOptions();
+
+        await loadExistingBlog();
+
+        renderCategoryOptions();
+        renderStatusSegment();
+        renderTagOptions();
+        rebuildTagInputs();
+        updatePreview();
+    }
+
+    startEditor();
+</script>
+
+<script>
+    /* ---------- Theme toggle (same behavior as the main site) ---------- */
+    const themeToggle = document.getElementById("theme-toggle");
+    const rootEl = document.documentElement;
+
+    function applyTheme(theme) {
+        rootEl.setAttribute("data-theme", theme);
+        try {
+            localStorage.setItem("derang-theme", theme);
+        } catch (e) {
+        }
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            const next = rootEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            applyTheme(next);
+        });
+    }
+
+    /* ---------- Command palette (⌘K), scoped to admin sections ---------- */
+    const cmdkData = [
+        {title: "پنل مدیریت", sub: "بازگشت به صفحه اصلی مدیریت", href: "http://localhost:8080/admin", external: true},
+        {title: "بلاگها", sub: "نوشتن، ویرایش و انتشار بلاگها", href: "http://localhost:8080/admin/blogs", external: true},
+        {title: "کاربران", sub: "حساب‌های کاربری و دسترسی‌ها", href: "http://localhost:8080/admin/users", external: true},
+        {title: "دیدگاه‌ها", sub: "بررسی، تأیید یا حذف دیدگاه‌ها", href: "http://localhost:8080/admin/comments", external: true},
+        {title: "بازگشت به سایت", sub: "خروج از پنل مدیریت", href: "http://localhost:8080", external: true}
+    ];
+
+    const cmdkOverlay = document.getElementById("cmdk-overlay");
+    const cmdkInput = document.getElementById("cmdk-input");
+    const cmdkList = document.getElementById("cmdk-list");
+    let cmdkActiveIndex = 0;
+    let cmdkFiltered = cmdkData;
+
+    function renderCmdk() {
+        if (!cmdkFiltered.length) {
+            cmdkList.innerHTML = `<p class="cmdk-empty">نتیجه‌ای پیدا نشد.</p>`;
+            return;
+        }
+        cmdkList.innerHTML = cmdkFiltered.map((item, i) => `
+            <div class="cmdk-item ${i === cmdkActiveIndex ? "is-active" : ""}" data-index="${i}">
+                <svg class="cmdk-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="12" cy="12" r="9"/>
+                </svg>
+                <div class="cmdk-item-text">
+                    <span class="cmdk-item-title">${item.title}</span>
+                    <span class="cmdk-item-sub">${item.sub}</span>
+                </div>
+            </div>
+        `).join("");
+
+        cmdkList.querySelectorAll(".cmdk-item").forEach((el) => {
+            const i = parseInt(el.dataset.index, 10);
+            el.addEventListener("click", () => goToCmdkItem(cmdkFiltered[i]));
+            el.addEventListener("mousemove", () => {
+                if (cmdkActiveIndex !== i) {
+                    cmdkActiveIndex = i;
+                    renderCmdk();
+                }
+            });
+        });
+    }
+
+    function goToCmdkItem(item) {
+        closeCmdk();
+        if (item.external) {
+            window.location.href = item.href;
+            return;
+        }
+        const target = document.querySelector(item.href);
+        if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+    }
+
+    function openCmdk() {
+        cmdkOverlay.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        cmdkInput.value = "";
+        cmdkFiltered = cmdkData;
+        cmdkActiveIndex = 0;
+        renderCmdk();
+        setTimeout(() => cmdkInput.focus(), 50);
+    }
+
+    function closeCmdk() {
+        cmdkOverlay.classList.remove("is-open");
+        document.body.style.overflow = "";
+    }
+
+    if (cmdkInput) {
+        cmdkInput.addEventListener("input", () => {
+            const q = cmdkInput.value.trim().toLowerCase();
+            cmdkFiltered = cmdkData.filter(item =>
+                item.title.toLowerCase().includes(q) || item.sub.toLowerCase().includes(q)
+            );
+            cmdkActiveIndex = 0;
+            renderCmdk();
+        });
+
+        cmdkInput.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                cmdkActiveIndex = Math.min(cmdkActiveIndex + 1, cmdkFiltered.length - 1);
+                renderCmdk();
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                cmdkActiveIndex = Math.max(cmdkActiveIndex - 1, 0);
+                renderCmdk();
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (cmdkFiltered[cmdkActiveIndex]) goToCmdkItem(cmdkFiltered[cmdkActiveIndex]);
+            }
+        });
+    }
+
+    if (cmdkOverlay) {
+        cmdkOverlay.addEventListener("click", (e) => {
+            if (e.target === cmdkOverlay) closeCmdk();
+        });
+    }
+
+    document.addEventListener("keydown", (e) => {
+        const isK = e.key.toLowerCase() === "k";
+        if ((e.metaKey || e.ctrlKey) && isK) {
+            e.preventDefault();
+            if (cmdkOverlay.classList.contains("is-open")) {
+                closeCmdk();
+            } else {
+                openCmdk();
+            }
+        }
+        if (e.key === "Escape" && cmdkOverlay.classList.contains("is-open")) closeCmdk();
+    });
+</script>
+
+</body>
+</html>

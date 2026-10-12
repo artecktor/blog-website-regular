@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت — درنگ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Vazirmatn:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin-style.css">
+    <script> (function () {
+        try {
+            const saved = localStorage.getItem("derang-theme");
+            const theme = saved || "light";
+            document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    })(); </script>
+</head>
+<body>
+
+<div class="page-loader" id="page-loader">
+    <div class="page-loader-mark">
+        <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 1.5 C12.6 7.8 14.2 9.4 20.5 10 C14.2 10.6 12.6 12.2 12 18.5 C11.4 12.2 9.8 10.6 3.5 10 C9.8 9.4 11.4 7.8 12 1.5 Z"/>
+        </svg>
+    </div>
+</div>
+
+<div class="ambient" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+</div>
+
+<header class="site-header">
+    <div class="header-inner admin-header-inner">
+        <a href="http://localhost:8080/admin" class="logo">
+            <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 1.5 C12.6 7.8 14.2 9.4 20.5 10 C14.2 10.6 12.6 12.2 12 18.5 C11.4 12.2 9.8 10.6 3.5 10 C9.8 9.4 11.4 7.8 12 1.5 Z"/>
+            </svg>
+            درنگ
+            <span class="admin-badge">مدیریت</span>
+        </a>
+
+        <div class="header-right admin-header-actions m-auto">
+            <button class="search-trigger" type="button" id="search-trigger" aria-label="جستجوی سریع"
+                    onclick="window.location.href='http://localhost:8080/search?focus=1'">
+
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M21 21l-4.3-4.3"/>
+                </svg>
+                <span class="search-trigger-label">جستجو</span>
+                <kbd class="search-kbd">⌘K</kbd>
+            </button>
+
+            <button class="theme-toggle" type="button" id="theme-toggle" aria-label="تغییر پوسته">
+                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7">
+                    <circle cx="12" cy="12" r="4.2"/>
+                    <path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+                </svg>
+                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7">
+                    <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/>
+                </svg>
+            </button>
+
+            <a href="http://localhost:8080" class="admin-exit-link">
+                <span>بازگشت به سایت</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M15 5 L8 12 L15 19"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <section class="admin-hero reveal">
+        <p class="eyebrow">پنل مدیریت درنگ</p>
+        <h1 class="admin-title">به کجا سر بزنیم؟</h1>
+        <p class="admin-sub">دیدگاه‌ها، کاربران و بلاگهای سایت را از همین‌جا مدیریت کنید.</p>
+    </section>
+
+    <section class="admin-stats reveal">
+        <div class="stat-chip">
+            <span id="blog-counter" class="stat-chip-number">۱۲۴</span>
+            <span class="stat-chip-label">بلاگ منتشر شده</span>
+        </div>
+        <div class="stat-chip">
+            <span id="user-counter" class="stat-chip-number">۳٬۲۱۰</span>
+            <span class="stat-chip-label">کاربر ثبت‌نامی</span>
+        </div>
+        <div class="stat-chip">
+            <span id="comment-counter" class="stat-chip-number">۸۶۴</span>
+            <span class="stat-chip-label">دیدگاه ثبت‌شده</span>
+        </div>
+        <div class="stat-chip stat-chip-alert">
+            <span id="unchecked-comment-counter" class="stat-chip-number">۷</span>
+            <span class="stat-chip-label">در انتظار بررسی</span>
+        </div>
+    </section>
+
+    <section class="admin-grid">
+
+        <a href="http://localhost:8080/admin/blogs" class="admin-card reveal">
+            <div class="admin-card-top">
+                <div class="admin-card-icon icon-blogs">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path d="M5 4.5 h14 a1 1 0 0 1 1 1 v13 a1 1 0 0 1 -1 1 H5 a1 1 0 0 1 -1 -1 v-13 a1 1 0 0 1 1 -1 Z"/>
+                        <path d="M8 9 h8 M8 12.5 h8 M8 16 h5"/>
+                    </svg>
+                </div>
+                <span id="blog-counter2" class="admin-card-count">۱۲۴</span>
+            </div>
+            <h2 class="admin-card-title">بلاگها</h2>
+            <p class="admin-card-desc">نوشتن، ویرایش و انتشار بلاگهای وبلاگ را مدیریت کنید.</p>
+            <span class="admin-card-cta">مدیریت بلاگها <span aria-hidden="true">←</span></span>
+        </a>
+
+        <a href="http://localhost:8080/admin/users" class="admin-card reveal">
+            <div class="admin-card-top">
+                <div class="admin-card-icon icon-users">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <circle cx="9" cy="8.5" r="3"/>
+                        <path d="M3.5 19 c0 -3.3 2.5 -5.5 5.5 -5.5 s5.5 2.2 5.5 5.5"/>
+                        <circle cx="17" cy="8.5" r="2.4"/>
+                        <path d="M15.7 13.7 c2.4 0.3 4.3 2.3 4.3 5.3"/>
+                    </svg>
+                </div>
+                <span id="user-counter2" class="admin-card-count">۳٬۲۱۰</span>
+            </div>
+            <h2 class="admin-card-title">کاربران</h2>
+            <p class="admin-card-desc">حساب‌های کاربری، دسترسی‌ها و وضعیت اعضای سایت را ببینید.</p>
+            <span class="admin-card-cta">مدیریت کاربران <span aria-hidden="true">←</span></span>
+        </a>
+
+        <a href="http://localhost:8080/admin/comments" class="admin-card reveal">
+            <div class="admin-card-top">
+                <div class="admin-card-icon icon-comments">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path d="M4 5.5 h16 a1 1 0 0 1 1 1 v9 a1 1 0 0 1 -1 1 H9 l-4.5 4 v-4 H4 a1 1 0 0 1 -1 -1 v-9 a1 1 0 0 1 1 -1 Z"/>
+                        <path d="M8 10 h8 M8 13 h5"/>
+                    </svg>
+                </div>
+                <span class="admin-card-count admin-card-count-alert"><span id="unchecked-comment-counter2">7</span> جدید</span>
+            </div>
+            <h2 class="admin-card-title">دیدگاه‌ها</h2>
+            <p class="admin-card-desc">دیدگاه‌های کاربران را بررسی، تأیید یا حذف کنید.</p>
+            <span class="admin-card-cta">مدیریت دیدگاه‌ها <span aria-hidden="true">←</span></span>
+        </a>
+
+    </section>
+
+</main>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="جستجوی سریع">
+        <div class="cmdk-input-wrap">
+            <svg class="cmdk-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="M21 21l-4.3-4.3"/>
+            </svg>
+            <input type="text" id="cmdk-input" class="cmdk-input" placeholder="جستجو در بخش‌های مدیریت…"
+                   autocomplete="off">
+            <kbd class="cmdk-esc">Esc</kbd>
+        </div>
+        <div class="cmdk-list" id="cmdk-list"></div>
+    </div>
+</div>
+
+<footer class="site-footer admin-footer">
+    <div class="footer-bottom admin-footer-bottom">
+        <div class="admin-footer-brand">
+            <svg class="logo-mark small" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 1.5 C12.6 7.8 14.2 9.4 20.5 10 C14.2 10.6 12.6 12.2 12 18.5 C11.4 12.2 9.8 10.6 3.5 10 C9.8 9.4 11.4 7.8 12 1.5 Z"/>
+            </svg>
+            <span>پنل مدیریت درنگ</span>
+        </div>
+        <p>© ۱۴۰۵ درنگ. دسترسی محدود به مدیران سایت.</p>
+    </div>
+</footer>
+
+<script>
+    let uncheckedComments = 0;
+    fetch("http://localhost:8080/blogs")
+        .then(res => res.json())
+        .then(res => {
+            document.getElementById("blog-counter").innerText = res.length.toLocaleString("fa-IR");
+            document.getElementById("blog-counter2").innerText = res.length.toLocaleString("fa-IR");
+        });
+    fetch("http://localhost:8080/users")
+        .then(res => res.json())
+        .then(res => {
+            document.getElementById("user-counter").innerText = res.length.toLocaleString("fa-IR")
+            document.getElementById("user-counter2").innerText = res.length.toLocaleString("fa-IR")
+        });
+    fetch("http://localhost:8080/comments")
+        .then(res => res.json())
+        .then(res => document.getElementById("comment-counter").innerText = res.length.toLocaleString("fa-IR"));
+    fetch("http://localhost:8080/comments")
+        .then(res => res.json())
+        .then(res => {
+            for (let i = 0; i < res.length; i++) {
+                if (!res[i].accepted) {
+                    uncheckedComments++;
+                }
+            }
+            document.getElementById("unchecked-comment-counter").innerText = uncheckedComments.toLocaleString("fa-IR");
+            document.getElementById("unchecked-comment-counter2").innerText = uncheckedComments.toLocaleString("fa-IR");
+        });
+
+    window.addEventListener("load", () => {
+        const loader = document.getElementById("page-loader");
+
+        const revealNow = () => {
+            document.querySelectorAll(".reveal").forEach((el, i) => {
+                const delay = i * 70;
+                el.style.transitionDelay = `${delay}ms`;
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => el.classList.add("visible"));
+                });
+                setTimeout(() => {
+                    el.style.transitionDelay = "";
+                }, delay + 850);
+            });
+        }
+
+        if (loader) {
+            setTimeout(() => {
+                loader.classList.add("is-hidden");
+                revealNow();
+            }, 450);
+        } else {
+            revealNow();
+        }
+    });
+
+    // Subtle tilt on admin cards, same spirit as the post-card tilt on the homepage
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+
+        const MAX_TILT = 5;
+
+        document.querySelectorAll(".admin-card").forEach(card => {
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const px = (e.clientX - rect.left) / rect.width;
+                const py = (e.clientY - rect.top) / rect.height;
+                const rotateY = (px - 0.5) * MAX_TILT * 2;
+                const rotateX = (0.5 - py) * MAX_TILT * 2;
+
+                card.classList.add("is-tilting");
+                card.style.transform =
+                    `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+                card.style.setProperty("--glare-x", `${px * 100}%`);
+                card.style.setProperty("--glare-y", `${py * 100}%`);
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.classList.remove("is-tilting");
+                card.style.transform = "";
+            });
+        });
+    }
+
+    /* ---------- Theme toggle (same behavior as the main site) ---------- */
+    const themeToggle = document.getElementById("theme-toggle");
+    const rootEl = document.documentElement;
+
+    function applyTheme(theme) {
+        rootEl.setAttribute("data-theme", theme);
+        try {
+            localStorage.setItem("derang-theme", theme);
+        } catch (e) {
+        }
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            const next = rootEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            applyTheme(next);
+        });
+    }
+
+    /* ---------- Command palette (⌘K), scoped to admin sections ---------- */
+    const cmdkData = [
+        {title: "پنل مدیریت", sub: "بازگشت به صفحه اصلی مدیریت", href: "http://localhost:8080/admin", external: true},
+        {title: "بلاگها", sub: "نوشتن، ویرایش و انتشار بلاگها", href: "http://localhost:8080/admin/blogs", external: true},
+        {title: "کاربران", sub: "حساب‌های کاربری و دسترسی‌ها", href: "http://localhost:8080/admin/users", external: true},
+        {title: "دیدگاه‌ها", sub: "بررسی، تأیید یا حذف دیدگاه‌ها", href: "http://localhost:8080/admin/comments", external: true},
+        {title: "بازگشت به سایت", sub: "خروج از پنل مدیریت", href: "http://localhost:8080", external: true}
+    ];
+
+    const cmdkOverlay = document.getElementById("cmdk-overlay");
+    const cmdkInput = document.getElementById("cmdk-input");
+    const cmdkList = document.getElementById("cmdk-list");
+    let cmdkActiveIndex = 0;
+    let cmdkFiltered = cmdkData;
+
+    function renderCmdk() {
+        if (!cmdkFiltered.length) {
+            cmdkList.innerHTML = `<p class="cmdk-empty">نتیجه‌ای پیدا نشد.</p>`;
+            return;
+        }
+        cmdkList.innerHTML = cmdkFiltered.map((item, i) => `
+            <div class="cmdk-item ${i === cmdkActiveIndex ? "is-active" : ""}" data-index="${i}">
+                <svg class="cmdk-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="12" cy="12" r="9"/>
+                </svg>
+                <div class="cmdk-item-text">
+                    <span class="cmdk-item-title">${item.title}</span>
+                    <span class="cmdk-item-sub">${item.sub}</span>
+                </div>
+            </div>
+        `).join("");
+
+        cmdkList.querySelectorAll(".cmdk-item").forEach((el) => {
+            const i = parseInt(el.dataset.index, 10);
+            el.addEventListener("click", () => goToCmdkItem(cmdkFiltered[i]));
+            el.addEventListener("mousemove", () => {
+                if (cmdkActiveIndex !== i) {
+                    cmdkActiveIndex = i;
+                    renderCmdk();
+                }
+            });
+        });
+    }
+
+    function goToCmdkItem(item) {
+        closeCmdk();
+        if (item.external) {
+            window.location.href = item.href;
+            return;
+        }
+        const target = document.querySelector(item.href);
+        if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+    }
+
+    function openCmdk() {
+        cmdkOverlay.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        cmdkInput.value = "";
+        cmdkFiltered = cmdkData;
+        cmdkActiveIndex = 0;
+        renderCmdk();
+        setTimeout(() => cmdkInput.focus(), 50);
+    }
+
+    function closeCmdk() {
+        cmdkOverlay.classList.remove("is-open");
+        document.body.style.overflow = "";
+    }
+
+    if (cmdkInput) {
+        cmdkInput.addEventListener("input", () => {
+            const q = cmdkInput.value.trim().toLowerCase();
+            cmdkFiltered = cmdkData.filter(item =>
+                item.title.toLowerCase().includes(q) || item.sub.toLowerCase().includes(q)
+            );
+            cmdkActiveIndex = 0;
+            renderCmdk();
+        });
+
+        cmdkInput.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                cmdkActiveIndex = Math.min(cmdkActiveIndex + 1, cmdkFiltered.length - 1);
+                renderCmdk();
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                cmdkActiveIndex = Math.max(cmdkActiveIndex - 1, 0);
+                renderCmdk();
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (cmdkFiltered[cmdkActiveIndex]) goToCmdkItem(cmdkFiltered[cmdkActiveIndex]);
+            }
+        });
+    }
+
+    const searchTrigger = document.getElementById("search-trigger");
+    if (searchTrigger) searchTrigger.addEventListener("click", openCmdk);
+
+    if (cmdkOverlay) {
+        cmdkOverlay.addEventListener("click", (e) => {
+            if (e.target === cmdkOverlay) closeCmdk();
+        });
+    }
+
+    document.addEventListener("keydown", (e) => {
+        const isK = e.key.toLowerCase() === "k";
+        if ((e.metaKey || e.ctrlKey) && isK) {
+            e.preventDefault();
+            if (cmdkOverlay.classList.contains("is-open")) {
+                closeCmdk();
+            } else {
+                openCmdk();
+            }
+        }
+        if (e.key === "Escape" && cmdkOverlay.classList.contains("is-open")) closeCmdk();
+    });
+</script>
+
+</body>
+</html>
