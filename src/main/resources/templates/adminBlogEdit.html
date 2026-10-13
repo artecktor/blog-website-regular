@@ -237,7 +237,9 @@
 </footer>
 
 <script>
-    const editId = new URLSearchParams(window.location.search).get("id");
+    // /admin/blog-edit/{slug} = edit an existing blog, /admin/blog-edit = new blog
+    const urlParts = window.location.pathname.split("/").filter(Boolean);
+    const editSlug = urlParts.length > 2 ? decodeURIComponent(urlParts[2]) : null;
 
     // The values must match your Status enum. Change them here if yours are different.
     const STATUS_OPTIONS = [
@@ -546,15 +548,22 @@
     ===================================================== */
 
     async function loadExistingBlog() {
-        if (!editId) {
+        if (!editSlug) {
             document.getElementById("f-id").disabled = true;
             return;
         }
 
         document.getElementById("editor-heading").innerText = "ویرایش بلاگ";
-        document.getElementById("f-id").value = editId;
 
-        const blog = await fetch("http://localhost:8080/blogs/" + editId).then(res => res.json());
+        const res = await fetch("http://localhost:8080/blogs/" + encodeURIComponent(editSlug));
+        if (!res.ok) {
+            window.location.href = "http://localhost:8080/admin/blogs";
+            return;
+        }
+        const blog = await res.json();
+
+        // The URL only carries the slug, but saving needs the numeric id so the existing row is updated.
+        document.getElementById("f-id").value = blog.id;
 
         fTitle.value = blog.title || "";
         fAuthor.value = blog.author || "";

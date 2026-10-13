@@ -193,7 +193,7 @@
 </footer>
 
 <script>
-    let targetId = new URLSearchParams(window.location.search).get("targetId");
+    let targetSlug = new URLSearchParams(window.location.search).get("target");
     document.getElementById("add-blog-btn").addEventListener("click", () => {
         window.location.href = "http://localhost:8080/admin/blog-edit";
     });
@@ -251,14 +251,14 @@
         const clock = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`;
 
         return `
-    <tr class="row-enter ${published ? "is-published" : "is-draft"}" data-id="${blog.id}" style="animation-delay:${index * 40}ms">
+    <tr class="row-enter ${published ? "is-published" : "is-draft"}" data-id="${blog.id}" data-slug="${esc(blog.slug)}" style="animation-delay:${index * 40}ms">
         <td class="cell-author-td">
             <div class="cell-author">
                 <span class="author-avatar blog-thumb">
                     <img src="${esc(blog.imageAddress)}" alt="">
                 </span>
                 <div class="title-stack">
-                    <a href="http://localhost:8080/admin/blog-edit?id=${blog.id}"
+                    <a href="http://localhost:8080/admin/blog-edit/${encodeURIComponent(blog.slug)}"
                        class="author-name link-underline" title="${esc(blog.description)}">${esc(blog.title)}</a>
                     ${blog.slug ? `<span class="slug-text" dir="ltr">/${esc(blog.slug)}</span>` : ""}
                 </div>
@@ -295,16 +295,16 @@
         </td>
         <td class="col-actions">
             <div class="row-actions">
-                ${published ? `<a href="http://localhost:8080/blog?id=${blog.id}" target="_blank" class="comment-action-btn" title="مشاهده">
+                ${published ? `<a href="http://localhost:8080/blog/${encodeURIComponent(blog.slug)}" target="_blank" class="comment-action-btn" title="مشاهده">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>
                     </svg></a>` : ""}
-                <button onclick="window.location.href='http://localhost:8080/admin/blog-edit?id=${blog.id}'" class="comment-action-btn accept-btn" title="ویرایش">
+                <button data-href="http://localhost:8080/admin/blog-edit/${encodeURIComponent(blog.slug)}" onclick="window.location.href=this.dataset.href" class="comment-action-btn accept-btn" title="ویرایش">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
                     </svg>
                 </button>
-                <button onclick="showDeleteAlert(${blog.id})" class="comment-action-btn delete-btn" title="حذف">
+                <button data-slug="${esc(blog.slug)}" onclick="showDeleteAlert(this.dataset.slug)" class="comment-action-btn delete-btn" title="حذف">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 7h14 M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2 M7 7l1 13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1l1-13 M10 11v6 M14 11v6"/>
                     </svg>
@@ -323,10 +323,10 @@
         renderBlogs();
     });
 
-    let pendingDeleteId = null;
+    let pendingDeleteSlug = null;
 
-    function showDeleteAlert(blogId) {
-        pendingDeleteId = blogId;
+    function showDeleteAlert(blogSlug) {
+        pendingDeleteSlug = blogSlug;
         document.getElementById("glass-alert-title").innerText = "حذف بلاگ";
         document.getElementById("glass-alert-text").innerText =
             "آیا مطمئن هستید که می‌خواهید این بلاگ را حذف کنید؟ این عمل قابل بازگشت نیست.";
@@ -335,16 +335,16 @@
 
     function hideGlassAlert() {
         document.getElementById("glass-alert-overlay").classList.remove("is-open");
-        pendingDeleteId = null;
+        pendingDeleteSlug = null;
     }
 
     document.getElementById("cancel-delete-btn").addEventListener("click", hideGlassAlert);
     document.getElementById("glass-alert-close").addEventListener("click", hideGlassAlert);
 
     document.getElementById("confirm-delete-btn").addEventListener("click", async () => {
-        if (!pendingDeleteId) return;
+        if (!pendingDeleteSlug) return;
 
-        await fetch("http://localhost:8080/blogs/" + pendingDeleteId, {
+        await fetch("http://localhost:8080/blogs/" + encodeURIComponent(pendingDeleteSlug), {
             method: "DELETE"
         });
 
@@ -353,9 +353,9 @@
     });
 
     function highlightTargetRow() {
-        if (!targetId) return;
+        if (!targetSlug) return;
 
-        const row = document.querySelector(`tr[data-id="${targetId}"]`);
+        const row = [...document.querySelectorAll("tr[data-slug]")].find(r => r.dataset.slug === targetSlug);
         if (!row) return; // target user not in current filter (e.g. deleted, or wrong tab)
 
         // restart animation cleanly even if called again (e.g. after role toggle)
