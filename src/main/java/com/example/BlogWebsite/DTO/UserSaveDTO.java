@@ -7,6 +7,7 @@ public class UserSaveDTO {
     private String password;
     private String email;
     private String address;
+    private String fullName;
 
     public String getUsername() {
         return username;
@@ -40,12 +41,21 @@ public class UserSaveDTO {
         this.address = address;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public ApplicationUser convertToApplicationUser() {
         ApplicationUser applicationUser = new ApplicationUser();
         applicationUser.setUsername(this.username);
         applicationUser.setPassword(this.password);
         applicationUser.setEmail(this.email);
         applicationUser.setAddress(this.address);
+        applicationUser.setFullName(this.fullName);
         return applicationUser;
     }
 }

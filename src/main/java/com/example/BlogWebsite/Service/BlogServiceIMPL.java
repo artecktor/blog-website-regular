@@ -22,6 +22,12 @@ public class BlogServiceIMPL implements BlogService {
 
     @Override
     public void save(Blog blog) {
+        if (blog.getStatus() == Status.PUBLISHED) {
+            blog.setPublishedDate(java.time.LocalDateTime.now());
+        } else {
+            blog.setPublishedDate(null);
+        }
+
         blogRepository.save(blog);
     }
 

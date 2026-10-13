@@ -10,6 +10,7 @@ public class CommentShowDTO {
     private int rating;
     private boolean accepted;
     private int blogId;
+    private String blogSlug;
     private int userId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -54,6 +55,14 @@ public class CommentShowDTO {
         this.blogId = blogId;
     }
 
+    public String getBlogSlug() {
+        return blogSlug;
+    }
+
+    public void setBlogSlug(String blogSlug) {
+        this.blogSlug = blogSlug;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -86,6 +95,7 @@ public class CommentShowDTO {
         dto.setRating(comment.getRating());
         dto.setAccepted(comment.isAccepted());
         dto.setBlogId(comment.getBlog().getId());
+        dto.setBlogSlug(comment.getBlog().getSlug());
         dto.setUserId(comment.getUser().getId());
         dto.setCreatedAt(comment.getCreatedAt());
         dto.setUpdatedAt(comment.getUpdatedAt());

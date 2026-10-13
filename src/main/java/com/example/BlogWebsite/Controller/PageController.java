@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriUtils;
+
+import java.nio.charset.StandardCharsets;
 
 import java.time.LocalDate;
 
@@ -41,20 +46,6 @@ public class PageController {
         return "home";
     }
 
-    @GetMapping("/{name}")
-    public String home2(@PathVariable String name, HttpSession httpSession) {
-        httpSession.setAttribute("userId", 100L);
-        httpSession.setAttribute("date", LocalDate.now());
-        httpSession.setAttribute("name", name);
-        return "home";
-    }
-
-    @GetMapping("/se")
-    @ResponseBody
-    public String se(HttpSession httpSession) {
-        return (String)  httpSession.getAttribute("name");
-    }
-
 //    @GetMapping("/blog")
 //    public String blog(int id, Model model) {
 //        Blog blog = blogService.findById(id);
@@ -69,6 +60,7 @@ public class PageController {
     @GetMapping("/blog/{slug}")
     public String blog(@PathVariable String slug, Model model) {
         Blog blog = blogService.findBySlug(slug);
+        blogService.incrementViewCounter(blog.getId());
         model.addAttribute("blog", blog);
         return "blog";
     }
@@ -143,7 +135,9 @@ public class PageController {
         return "adminBlog";
     }
 
-    @GetMapping("/admin/blog-edit")
+    // /admin/blog-edit        -> new blog
+    // /admin/blog-edit/{slug} -> edit an existing blog (the page reads the slug from the URL)
+    @GetMapping({"/admin/blog-edit", "/admin/blog-edit/{slug}"})
     public String adminBlogEdit() {
         return "adminBlogEdit";
     }
@@ -181,10 +175,6 @@ public class PageController {
     @PostMapping("/comments/save")
     public String saveFromForm(CommentSaveDTO dto) {
 
-        System.out.println("blogId: " + dto.getBlogId());
-        System.out.println("email: " + dto.getEmail());
-        System.out.println("password: " + dto.getPassword());
-
         Blog blog = blogService.findById(dto.getBlogId());
 
         ApplicationUser user =
@@ -193,9 +183,6 @@ public class PageController {
                         dto.getPassword()
                 );
 
-        System.out.println("blog: " + blog);
-        System.out.println("user: " + user);
-
         Comment comment = dto.convertToComment();
 
         comment.setBlog(blog);
@@ -203,6 +190,6 @@ public class PageController {
 
         commentService.save(comment);
 
-        return "redirect:/blog?id=" + blog.getId();
+        return "redirect:/blog/" + blog.getSlug();
     }
 }

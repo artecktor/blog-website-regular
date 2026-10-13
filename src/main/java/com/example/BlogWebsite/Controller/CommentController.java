@@ -3,11 +3,14 @@ package com.example.BlogWebsite.Controller;
 import com.example.BlogWebsite.DTO.CommentSaveDTO;
 import com.example.BlogWebsite.DTO.CommentShowDTO;
 import com.example.BlogWebsite.Model.ApplicationUser;
+import com.example.BlogWebsite.Model.Blog;
 import com.example.BlogWebsite.Model.Comment;
 import com.example.BlogWebsite.Service.ApplicationUserService;
 import com.example.BlogWebsite.Service.BlogService;
 import com.example.BlogWebsite.Service.CommentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,6 +29,14 @@ public class CommentController {
         this.commentService = commentService;
         this.applicationUserService = applicationUserService;
         this.blogService = blogService;
+    }
+
+    private Blog findBlogOr404(String slug) {
+        Blog blog = blogService.findBySlug(slug);
+        if (blog == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Blog not found: " + slug);
+        }
+        return blog;
     }
 
     @PostMapping
@@ -81,17 +92,17 @@ public class CommentController {
     }
 
     @GetMapping("/blog/{slug}")
-    public List<CommentShowDTO> findByBlogId(@PathVariable int id) {
-        return commentService.findByBlog(blogService.findById(id))
+    public List<CommentShowDTO> findByBlogSlug(@PathVariable String slug) {
+        return commentService.findByBlog(findBlogOr404(slug))
                 .stream()
                 .map(comment -> new CommentShowDTO().convertToDTO(comment))
                 .toList();
     }
 
-    @GetMapping("/blog/{id}/sorted")
-    public List<CommentShowDTO> findByBlogIdSorted(@PathVariable int id) {
+    @GetMapping("/blog/{slug}/sorted")
+    public List<CommentShowDTO> findByBlogSlugSorted(@PathVariable String slug) {
         return commentService
-                .findByBlogAndAcceptedTrueOrderByUpdatedAtDesc(blogService.findById(id))
+                .findByBlogAndAcceptedTrueOrderByUpdatedAtDesc(findBlogOr404(slug))
                 .stream()
                 .map(comment -> new CommentShowDTO().convertToDTO(comment))
                 .toList();

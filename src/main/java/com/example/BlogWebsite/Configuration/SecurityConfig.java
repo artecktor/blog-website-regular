@@ -24,7 +24,7 @@ public class SecurityConfig {
                 form.loginPage("/login")
                         .loginProcessingUrl("/login")
                         .failureUrl("/login?error=true")
-                        .defaultSuccessUrl("/admin", true)
+                        .defaultSuccessUrl("/", true)
                         .permitAll());
         security.logout(logout -> logout.logoutSuccessUrl("/logout?logout")
                 .permitAll());

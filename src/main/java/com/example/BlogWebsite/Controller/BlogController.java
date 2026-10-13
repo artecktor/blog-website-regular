@@ -6,7 +6,9 @@ import com.example.BlogWebsite.Model.Blog;
 import com.example.BlogWebsite.Model.Status;
 import com.example.BlogWebsite.Service.BlogService;
 import com.example.BlogWebsite.Service.TagService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,22 +23,25 @@ public class BlogController {
         this.tagService = tagService;
     }
 
+    private Blog findBlog(String slug) {
+        Blog blog = blogService.findBySlug(slug);
+        return blog;
+    }
+
     @PostMapping("/update")
     public void updateBlog(BlogSaveDTO blogSaveDTO) {
         Blog blog = blogSaveDTO.convertToBlog();
         blogService.update(blog);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteBlog(@PathVariable int id) {
-        Blog blog = blogService.findById(id);
-        blogService.delete(blog);
+    @DeleteMapping("/{slug}")
+    public void deleteBlog(@PathVariable String slug) {
+        blogService.delete(findBlog(slug));
     }
 
-    @GetMapping("/{id}")
-    public BlogShowDTO findById(@PathVariable int id) {
-        Blog blog = blogService.findById(id);
-        return new BlogShowDTO().convertToDTO(blog);
+    @GetMapping("/{slug}")
+    public BlogShowDTO findBySlug(@PathVariable String slug) {
+        return new BlogShowDTO().convertToDTO(findBlog(slug));
     }
 
     @GetMapping

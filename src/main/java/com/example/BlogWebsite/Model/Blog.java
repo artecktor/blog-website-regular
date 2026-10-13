@@ -23,8 +23,9 @@ public class Blog {
     private String slug;
     private LocalDateTime creationDate;
     private LocalDateTime updateDate;
+    private LocalDateTime publishedDate;
 
-    public Blog(int id, String title, String author, String content, String description, String imageAddress, List<Comment> comments, Category category, Status status, List<Tag> tags, int viewCounter, String slug, LocalDateTime creationDate, LocalDateTime updateDate) {
+    public Blog(int id, String title, String author, String content, String description, String imageAddress, List<Comment> comments, Category category, Status status, List<Tag> tags, int viewCounter, String slug, LocalDateTime creationDate, LocalDateTime updateDate, LocalDateTime publishedDate) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -39,6 +40,7 @@ public class Blog {
         this.slug = slug;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
+        this.publishedDate = publishedDate;
     }
 
     public Blog() {
@@ -173,6 +175,14 @@ public class Blog {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public LocalDateTime getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(LocalDateTime publishedDate) {
+        this.publishedDate = publishedDate;
     }
 }
 

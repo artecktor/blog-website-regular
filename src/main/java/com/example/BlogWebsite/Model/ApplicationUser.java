@@ -2,6 +2,7 @@ package com.example.BlogWebsite.Model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -14,16 +15,18 @@ public class ApplicationUser {
     private String password;
     private String email;
     private String address;
+    private String fullName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Role role;
 
-    public ApplicationUser(int id, String username, String password, String email, String address, LocalDateTime createdAt, LocalDateTime updatedAt, Role role) {
+    public ApplicationUser(int id, String username, String password, String email, String address, String fullName, LocalDateTime createdAt, LocalDateTime updatedAt, Role role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
+        this.fullName = fullName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.role = role;
@@ -100,5 +103,13 @@ public class ApplicationUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }
