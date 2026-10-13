@@ -572,11 +572,11 @@
                 <div class="post-thumb" aria-hidden="true"><img src="${esc(b.imageAddress)}" alt="" loading="lazy"></div>
                 <div class="post-card-body">
                     <p class="post-meta"><span>${highlight(b.author, state.terms)}</span>${hasDate ? `<span> · ${dateFmt.format(new Date(b.creationDate))}</span>` : ""}</p>
-                    <h3 class="post-title"><a href="${API}/blog?id=${b.id}">${highlight(b.title, state.terms)}</a></h3>
+                    <h3 class="post-title"><a href="${API}/blog/${encodeURIComponent(b.slug)}">${highlight(b.title, state.terms)}</a></h3>
                     <p class="post-excerpt">${highlight(b.description, state.terms)}</p>
                     ${tags.length ? `<div class="card-tags">${tags.map(t => `<button type="button" class="card-tag" data-tag="${esc(keyOf(t))}">#${esc(t.name)}</button>`).join("")}</div>` : ""}
                     <div class="card-foot">
-                        <a href="${API}/blog?id=${b.id}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
+                        <a href="${API}/blog/${encodeURIComponent(b.slug)}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
                         <div class="card-stats">
                             <span>${clock}${rt} دقیقه</span>
                             ${b.viewCounter > 0 ? `<span>${eye}${fa(b.viewCounter)}</span>` : ""}

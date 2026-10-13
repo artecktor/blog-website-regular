@@ -403,11 +403,11 @@
             <div class="post-thumb" aria-hidden="true"><img src="${esc(blog.imageAddress)}" alt="" loading="lazy"></div>
             <div class="post-card-body">
                 <p class="post-meta"><span>${esc(blog.author)}</span>${hasDate ? `<span> · ${dateFmt.format(new Date(blog.creationDate))}</span>` : ""}</p>
-                <h3 class="post-title"><a href="${API}/blog?id=${blog.id}">${esc(blog.title)}</a></h3>
+                <h3 class="post-title"><a href="${API}/blog/${encodeURIComponent(blog.slug)}">${esc(blog.title)}</a></h3>
                 <p class="post-excerpt">${esc(blog.description)}</p>
                 ${tags.length ? `<div class="card-tags">${tags.map(t => `<a class="card-tag" href="${API}/search?tag=${encodeURIComponent(keyOf(t))}">#${esc(t.name)}</a>`).join("")}</div>` : ""}
                 <div class="card-foot">
-                    <a href="${API}/blog?id=${blog.id}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
+                    <a href="${API}/blog/${encodeURIComponent(blog.slug)}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
                     <div class="card-stats">
                         <span>${clock}${rt} دقیقه</span>
                         ${blog.viewCounter > 0 ? `<span>${eye}${fa(blog.viewCounter)}</span>` : ""}
@@ -432,7 +432,7 @@
     //                 <p class="post-meta"><span>${blog.author}</span><span> · ${readingTime} دقیقه مطالعه</span></p>
     //                 <h3 class="post-title">${blog.title}</h3>
     //                 <p class="post-excerpt">${blog.description}</p>
-    //                 <a href="http://localhost:8080/blog?id=${blog.id}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
+    //                 <a href="http://localhost:8080/blog/${encodeURIComponent(blog.slug)}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
     //             </div>
     //         </article>
     // </div>
@@ -796,7 +796,7 @@
         const blogItems = blogs.map(b => ({
             title: b.title,
             sub: "بلاگ · " + b.author,
-            href: "http://localhost:8080/blog?id=" + b.id,
+            href: "http://localhost:8080/blog/" + encodeURIComponent(b.slug),
             external: true
         }));
         cmdkAllItems = [...cmdkData, ...blogItems];
