@@ -1,6 +1,4 @@
-/* ---------------------------------------------
-   Page loader (same pattern as auth pages)
---------------------------------------------- */
+
 .page-loader {
     position: fixed;
     inset: 0;
@@ -52,9 +50,6 @@
     }
 }
 
-/* ---------------------------------------------
-   Admin header tweaks
---------------------------------------------- */
 .admin-header-inner {
     justify-content: space-between;
 }
@@ -96,9 +91,7 @@
     transform: translateX(-2px);
 }
 
-/* ---------------------------------------------
-   Hero
---------------------------------------------- */
+
 .admin-hero {
     max-width: 720px;
     margin: 76px auto 0;
@@ -120,9 +113,7 @@
     margin: 0;
 }
 
-/* ---------------------------------------------
-   Stat chips
---------------------------------------------- */
+
 .admin-stats {
     max-width: 1000px;
     margin: 48px auto 0;
@@ -193,9 +184,7 @@
     }
 }
 
-/* ---------------------------------------------
-   Admin cards grid
---------------------------------------------- */
+
 .admin-grid {
     max-width: 1120px;
     margin: 56px auto 0;
@@ -341,9 +330,7 @@
     gap: 10px;
 }
 
-/* ---------------------------------------------
-   Admin footer
---------------------------------------------- */
+
 .admin-footer {
     margin-top: auto;
 }
@@ -362,9 +349,7 @@
     color: var(--ink);
 }
 
-/* ---------------------------------------------
-   Responsive (dashboard)
---------------------------------------------- */
+
 @media (max-width: 900px) {
     .admin-grid {
         grid-template-columns: minmax(0, 1fr);
@@ -397,9 +382,7 @@
     }
 }
 
-/* ===============================================
-   Comments management page — table view
-=================================================== */
+
 
 .comments-toolbar {
     max-width: 1080px;
@@ -464,7 +447,7 @@
     color: var(--ink-soft);
 }
 
-/* ---------- bulk action bar ---------- */
+
 
 .bulk-bar {
     max-width: 1080px;
@@ -544,7 +527,7 @@
     border-color: rgba(255, 255, 255, .7);
 }
 
-/* ---------- table shell ---------- */
+
 
 .comments-wrap {
     max-width: 1080px;
@@ -579,10 +562,11 @@
 table.comments-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 780px;
+    /*min-width: 780px;*/
+    min-width: 960px;
 }
 
-/* ---------- targeted user row (via ?targetId=) ---------- */
+
 
 .comments-table tbody tr.is-target {
     background: rgba(217, 119, 87, .16);
@@ -826,7 +810,6 @@ tr.is-expanded .comment-text-cell {
     transform: none;
 }
 
-/* ---------- empty / loading states ---------- */
 
 .comments-empty {
     text-align: center;
@@ -869,7 +852,7 @@ tr.is-expanded .comment-text-cell {
     }
 }
 
-/* ---------- responsive ---------- */
+
 
 @media (max-width: 900px) {
     .comments-toolbar,
@@ -967,7 +950,7 @@ tr.is-expanded .comment-text-cell {
     text-align: right;
 }
 
-/* ---------- iOS role switch ---------- */
+
 
 .ios-switch {
     position: relative;
@@ -1023,7 +1006,7 @@ tr.is-expanded .comment-text-cell {
     filter: brightness(1.05);
 }
 
-/* ---------- Blog editor panel ---------- */
+
 
 .editor-panel {
     max-width: 1080px;
@@ -1091,7 +1074,7 @@ tr.is-expanded .comment-text-cell {
     outline: none;
 }
 
-/* ---------- Live preview wrapper ---------- */
+
 
 #preview-wrap {
     margin-top: 40px;
@@ -1113,7 +1096,7 @@ tr.is-expanded .comment-text-cell {
     letter-spacing: 0.02em;
 }
 
-/* Reuse .add-user-error class from earlier for editor errors */
+
 .editor-panel .add-user-error {
     margin-top: 8px;
 }
@@ -1141,18 +1124,14 @@ tr.is-expanded .comment-text-cell {
     }
 }
 
-/* ---------- Round buttons inside admin glass alerts (match home page) ---------- */
+
 
 .glass-alert .btn-auth-primary,
 .glass-alert .bulk-btn {
     border-radius: 999px;
 }
 
-/* ---------------------------------------------
-   Admin header — search & theme toggle
-   (grouped together with the exit link, all on
-   the left side, same arrangement as the home page)
---------------------------------------------- */
+
 .admin-header-actions {
     gap: 14px;
 }
@@ -1176,9 +1155,7 @@ tr.is-expanded .comment-text-cell {
     }
 }
 
-/* ---------------------------------------------
-   Dark mode — match the homepage's glass cards
---------------------------------------------- */
+
 html[data-theme="dark"] .admin-card,
 html[data-theme="dark"] .stat-chip,
 html[data-theme="dark"] .comments-table-shell,
@@ -1213,14 +1190,7 @@ html[data-theme="dark"] .comments-table tbody tr.is-target {
     border-color: rgba(232, 145, 107, .35);
 }
 
-/* ---------------------------------------------
-   Fix: <kbd> elements (⌘K badge, Esc badge) were
-   inheriting Bootstrap's default black kbd
-   background on pages that load bootstrap.min.css.
-   Neither style.css nor admin-style.css previously
-   set a background on these, so Bootstrap's rule
-   (kbd { background-color: #212529 }) won.
---------------------------------------------- */
+
 .search-kbd,
 .cmdk-esc {
     background: rgba(255, 255, 255, .4);
@@ -1232,12 +1202,7 @@ html[data-theme="dark"] .cmdk-esc {
     border-color: rgba(255, 255, 255, .14);
 }
 
-/* =====================================================
-   Blog editor: category, status, slug, tags
-   (append to the end of admin-style.css)
-===================================================== */
 
-/* ---------- Category select ---------- */
 .select-field {
     position: relative;
     color: var(--ink-soft);
@@ -1282,7 +1247,7 @@ html[data-theme="dark"] .cmdk-esc {
     color: var(--ink);
 }
 
-/* ---------- Status switch ---------- */
+
 .status-segment {
     display: flex;
     gap: 6px;
@@ -1316,13 +1281,13 @@ html[data-theme="dark"] .cmdk-esc {
     box-shadow: 0 8px 18px -6px rgba(217, 119, 87, .55);
 }
 
-/* Published uses the same green as accepted comments */
+
 .status-option.is-active[data-value="PUBLISHED"] {
     background: linear-gradient(140deg, #6FAE84, #4C7A5D);
     box-shadow: 0 8px 18px -6px rgba(76, 122, 93, .55);
 }
 
-/* ---------- Slug ---------- */
+
 .editor-fields .form-field .label-row {
     display: flex;
     align-items: center;
@@ -1357,7 +1322,7 @@ html[data-theme="dark"] .cmdk-esc {
     color: var(--ink-soft);
 }
 
-/* ---------- Tag picker ---------- */
+
 .label-count {
     color: var(--terracotta-dk);
     font-weight: 600;
@@ -1422,13 +1387,13 @@ html[data-theme="dark"] .cmdk-esc {
     color: var(--ink-soft);
 }
 
-/* ---------- Preview: keep tag chips still while editing ---------- */
+
 #preview-wrap .tag-chip {
     animation: none;
     opacity: 1;
 }
 
-/* ---------- Dark mode ---------- */
+
 html[data-theme="dark"] .editor-fields .form-field select,
 html[data-theme="dark"] .status-segment,
 html[data-theme="dark"] .tag-picker,
@@ -1442,7 +1407,7 @@ html[data-theme="dark"] .tag-option.is-selected {
     border-color: transparent;
 }
 
-/* ---------- Blog list: new field columns ---------- */
+
 .title-stack {
     display: flex;
     flex-direction: column;
@@ -1533,7 +1498,7 @@ html[data-theme="dark"] .mini-tag {
     border-color: rgba(255, 255, 255, .12);
 }
 
-/* The table now has 8 columns */
+
 table.comments-table {
     min-width: 1000px;
 }
@@ -1550,7 +1515,7 @@ table.comments-table {
     }
 }
 
-/* ---------- Published vs draft ---------- */
+
 :root {
     --pub: #4C7A5D;
     --pub-soft: rgba(76, 122, 93, .14);
@@ -1569,7 +1534,7 @@ html[data-theme="dark"] {
     --draft-line: rgba(168, 159, 146, .4);
 }
 
-/* Status pill */
+
 .state-pill {
     display: inline-flex;
     align-items: center;
@@ -1598,7 +1563,7 @@ html[data-theme="dark"] {
     border: 1px dashed var(--draft-line);
 }
 
-/* Row accent stripe (first cell = right edge in RTL) */
+
 .comments-table tbody tr.is-published td:first-child {
     box-shadow: inset -3px 0 0 var(--pub);
 }
@@ -1607,7 +1572,7 @@ html[data-theme="dark"] {
     box-shadow: inset -3px 0 0 var(--draft-line);
 }
 
-/* Draft rows: quieter */
+
 .comments-table tbody tr.is-draft td {
     color: var(--ink-soft);
 }
@@ -1637,7 +1602,7 @@ html[data-theme="dark"] {
     opacity: 1;
 }
 
-/* Thumbnail */
+
 .blog-thumb {
     width: 44px !important;
     height: 44px !important;
@@ -1652,7 +1617,7 @@ html[data-theme="dark"] {
     object-fit: cover;
 }
 
-/* Byline + stats cells */
+
 .comments-table td.cell-byline,
 .comments-table td.cell-num {
     text-align: center;
@@ -1690,7 +1655,7 @@ html[data-theme="dark"] {
     height: 13px;
 }
 
-/* Filter pill dots */
+
 .pill-dot {
     width: 7px;
     height: 7px;
@@ -1710,7 +1675,7 @@ html[data-theme="dark"] {
 
 .filter-pill.is-active .dot-published { background: #fff; }
 
-/* Table is narrower now */
+
 table.comments-table { min-width: 860px; }
 
 .comments-wrap,
@@ -1727,12 +1692,12 @@ table.comments-table { min-width: 860px; }
 }
 
 
-/* post-category inside the table */
+
 .comments-table .cell-cats .post-category {
-    margin-bottom: 0;   /* it has margin-bottom: 18px for the post page header */
+    margin-bottom: 0;
 }
 
-/* Bootstrap's a:hover (blue + underline) beats .post-category, so undo it */
+
 .comments-table a.post-category,
 .comments-table a.post-category:hover {
     color: inherit;
@@ -1751,4 +1716,144 @@ table.comments-table { min-width: 860px; }
 .comments-table a.card-tag:hover {
     color: var(--terracotta-dk);
     text-decoration: none;
+}
+
+
+.admin-stats {
+    width: min(1040px, calc(100% - 64px));
+    max-width: none;
+    margin: 48px auto 0;
+    padding: 8px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    background: rgba(255, 255, 255, .24);
+    border: 1px solid rgba(255, 255, 255, .48);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(26px) saturate(180%);
+    -webkit-backdrop-filter: blur(26px) saturate(180%);
+    box-shadow: 0 20px 44px rgba(43, 38, 33, .10), inset 0 1px 0 rgba(255, 255, 255, .6);
+}
+
+.admin-stats .stat-chip {
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 22px 12px;
+    justify-content: center;
+}
+
+
+.admin-stats .stat-chip + .stat-chip::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 22%;
+    bottom: 22%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(43, 38, 33, .16), transparent);
+}
+
+.admin-stats .stat-chip-number {
+    font-size: 1.6rem;
+    line-height: 1.3;
+}
+
+.admin-stats .stat-chip-label {
+    line-height: 1.5;
+    max-width: 16ch;
+}
+
+
+.admin-stats .stat-chip-alert {
+    background: rgba(217, 119, 87, .14);
+    box-shadow: inset 0 0 0 1px rgba(217, 119, 87, .32);
+}
+
+.admin-stats .stat-chip-alert::before {
+    display: none;
+}
+
+html[data-theme="dark"] .admin-stats {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .12);
+}
+
+html[data-theme="dark"] .admin-stats .stat-chip + .stat-chip::before {
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, .16), transparent);
+}
+
+html[data-theme="dark"] .admin-stats .stat-chip-alert {
+    background: rgba(232, 145, 107, .14);
+    box-shadow: inset 0 0 0 1px rgba(232, 145, 107, .32);
+}
+
+
+.admin-grid {
+    max-width: 1000px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.admin-card {
+    padding: 34px 34px 30px;
+}
+
+
+@media (max-width: 1000px) {
+
+    .admin-stats {
+        width: 100%;
+        padding: 0 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        background: none;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .admin-stats .stat-chip {
+        background: rgba(255, 255, 255, .3);
+        border: 1px solid rgba(255, 255, 255, .5);
+        box-shadow: 0 10px 24px rgba(43, 38, 33, .06), inset 0 1px 0 rgba(255, 255, 255, .6);
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+    }
+
+    .admin-stats .stat-chip + .stat-chip::before {
+        display: none;
+    }
+
+    .admin-stats .stat-chip:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .admin-stats .stat-chip-alert {
+        border-color: rgba(217, 119, 87, .35);
+    }
+
+    .admin-stats .stat-chip-alert::after {
+        display: block;
+    }
+
+    html[data-theme="dark"] .admin-stats .stat-chip {
+        background: rgba(255, 255, 255, .05);
+        border-color: rgba(255, 255, 255, .12);
+    }
+
+    html[data-theme="dark"] .admin-stats .stat-chip-alert {
+        background: rgba(232, 145, 107, .14);
+        border-color: rgba(232, 145, 107, .35);
+    }
+}
+
+@media (max-width: 760px) {
+    .admin-grid {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 0 20px 96px;
+    }
 }

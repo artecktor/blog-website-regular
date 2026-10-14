@@ -272,17 +272,16 @@
                 emailInput.classList.remove("invalid");
             }
         } catch (err) {
-            // network hiccup — don't mislead the user with a false valid/invalid state
+
             emailInput.classList.remove("valid", "invalid");
         }
     }
 
     emailInput.addEventListener("input", () => {
         clearTimeout(emailCheckTimer);
-        emailInput.classList.remove("valid", "invalid"); // clear stale state while typing
-        emailCheckTimer = setTimeout(validateEmail, 400); // debounce so we don't hit the server every keystroke
+        emailInput.classList.remove("valid", "invalid");
+        emailCheckTimer = setTimeout(validateEmail, 400);
     });
-    // ---------------- end live duplicate-email check ----------------
 
     function showGlassAlert(title, text) {
         const overlay = document.getElementById("glass-alert-overlay");
@@ -291,7 +290,7 @@
         document.getElementById("glass-alert-text").innerText = text;
 
         overlay.classList.remove("is-open");
-        void overlay.offsetWidth; // force a reflow so the browser "sees" the closed state
+        void overlay.offsetWidth;
 
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -328,8 +327,8 @@
         }
     });
 
-    /* Registration error from backend */
-    let registerError = /*[[${registerError}]]*/ null;
+
+    let registerError = null;
 
     if (registerError !== null && registerError.trim() !== "") {
         showGlassAlert(
@@ -341,7 +340,7 @@
     document.getElementById("register-form")
         .addEventListener("submit", async function (event) {
 
-            event.preventDefault(); // always intercept first, then decide whether to actually submit
+            event.preventDefault();
 
             const form = event.target;
 
@@ -356,7 +355,7 @@
             const repeatPassword =
                 document.getElementById("register-password2").value.trim();
 
-            // Empty check (optional because required already exists)
+
             if (!password || !repeatPassword) {
                 showGlassAlert(
                     "فیلدهای ناقص",
@@ -365,7 +364,7 @@
                 return;
             }
 
-            // Password match check
+
             if (password !== repeatPassword) {
                 showGlassAlert(
                     "عدم تطابق رمز عبور",
@@ -377,7 +376,7 @@
                 return;
             }
 
-            // Duplicate email check (final guard before actually submitting)
+
             const submitBtn = form.querySelector(".btn-auth-primary");
             submitBtn.disabled = true;
 
@@ -395,7 +394,7 @@
                     return;
                 }
 
-                form.submit(); // all checks passed, submit for real
+                form.submit();
             } catch (err) {
                 showGlassAlert(
                     "خطا",

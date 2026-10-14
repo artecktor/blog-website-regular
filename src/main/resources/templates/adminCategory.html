@@ -274,11 +274,11 @@
         if (!targetSlug) return;
 
         const row = [...document.querySelectorAll("tr[data-slug]")].find(r => r.dataset.slug === targetSlug);
-        if (!row) return; // target user not in current filter (e.g. deleted, or wrong tab)
+        if (!row) return;
 
-        // restart animation cleanly even if called again (e.g. after role toggle)
+
         row.classList.remove("is-target");
-        void row.offsetWidth; // force reflow so the animation replays
+        void row.offsetWidth;
         row.classList.add("is-target");
 
         row.scrollIntoView({behavior: "smooth", block: "center"});
@@ -312,7 +312,7 @@
 </script>
 
 <script>
-    /* ---------- Theme toggle (same behavior as the main site) ---------- */
+
     const themeToggle = document.getElementById("theme-toggle");
     const rootEl = document.documentElement;
 
@@ -331,7 +331,7 @@
         });
     }
 
-    /* ---------- Command palette (⌘K), scoped to admin sections ---------- */
+
     const cmdkData = [
         {title: "پنل مدیریت", sub: "بازگشت به صفحه اصلی مدیریت", href: "http://localhost:8080/admin", external: true},
         {title: "بلاگها", sub: "نوشتن، ویرایش و انتشار بلاگها", href: "http://localhost:8080/admin/blogs", external: true},

@@ -383,9 +383,9 @@
         return String(u ?? "").replace(/['"()\s]/g, c => encodeURIComponent(c));
     }
 
-    // The page URL is /blog/{slug}; the slug is the last path segment.
+
     const blogSlug = decodeURIComponent(window.location.pathname.split("/").filter(Boolean).pop() || "");
-    // Numeric id: filled in once the blog has loaded (the comment form still posts blogId in its body).
+
     let blogId = null;
 
     function getBlogDetails() {
@@ -649,7 +649,7 @@
     function revealize(elements) {
         const observer = getRevealObserver();
         elements.forEach(el => {
-            if (el.dataset.revealBound) return; // avoid double-binding the same element
+            if (el.dataset.revealBound) return;
             el.dataset.revealBound = "true";
             el.classList.add("reveal");
             observer.observe(el);
@@ -735,14 +735,14 @@
         document.addEventListener("mouseout", (e) => {
             const card = e.target.closest(".post-card");
             if (!card) return;
-            if (card.contains(e.relatedTarget)) return; // still moving within the same card
+            if (card.contains(e.relatedTarget)) return;
 
             card.classList.remove("is-tilting");
             card.style.transform = "";
         });
     }
 
-    /* Theme toggle */
+
     const themeToggle = document.getElementById("theme-toggle");
     const rootEl = document.documentElement;
 
@@ -761,7 +761,7 @@
         });
     }
 
-    /* Scroll progress bar */
+
     const scrollProgress = document.getElementById("scroll-progress");
 
     function updateScrollProgress() {
@@ -774,7 +774,7 @@
     window.addEventListener("scroll", updateScrollProgress, {passive: true});
     window.addEventListener("resize", updateScrollProgress);
 
-    /* Back to top */
+
     const backToTop = document.getElementById("back-to-top");
 
     window.addEventListener("scroll", () => {
@@ -801,7 +801,7 @@
     }
 
     function renderTaxonomy(blog) {
-        // Category
+
         const catEl = document.getElementById("post-category");
         if (blog.category && blog.category.name) {
             document.getElementById("post-category-name").innerText = blog.category.name;
@@ -809,7 +809,7 @@
             catEl.hidden = false;
         }
 
-        // Tags
+
         const tags = Array.isArray(blog.tags) ? blog.tags : [];
         if (tags.length) {
             document.getElementById("post-tags").innerHTML = tags.map((t, i) => `

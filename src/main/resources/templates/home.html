@@ -420,25 +420,6 @@
         document.getElementById("blog-section").insertAdjacentHTML("beforeend", card);
     }
 
-    // function convertToHTML(blog) {
-    //     let readingTime = Math.ceil(blog.content.length / 1200).toLocaleString("fa-IR");
-    //     let card = `
-    // <div class="post-card-wrap">
-    //     <div class="post-card-glow" style="background-image:url('${blog.imageAddress}')" aria-hidden="true"></div>
-    //     <div class="post-card-mask" aria-hidden="true"></div>
-    //     <article class="post-card">
-    //             <div class="post-thumb" aria-hidden="true"><img src="${blog.imageAddress}" alt=""></div>
-    //             <div class="post-card-body">
-    //                 <p class="post-meta"><span>${blog.author}</span><span> · ${readingTime} دقیقه مطالعه</span></p>
-    //                 <h3 class="post-title">${blog.title}</h3>
-    //                 <p class="post-excerpt">${blog.description}</p>
-    //                 <a href="http://localhost:8080/blog/${encodeURIComponent(blog.slug)}" class="read-link"><span aria-hidden="true">←</span> ادامه مطلب</a>
-    //             </div>
-    //         </article>
-    // </div>
-    // `
-    //     document.getElementById("blog-section").innerHTML += card;
-    // }
 
     const hamburgerBtn = document.getElementById("hamburger-btn");
     const mobileNavPanel = document.getElementById("mobile-nav-panel");
@@ -485,7 +466,7 @@
     function revealize(elements) {
         const observer = getRevealObserver();
         elements.forEach(el => {
-            if (el.dataset.revealBound) return; // avoid double-binding the same element
+            if (el.dataset.revealBound) return;
             el.dataset.revealBound = "true";
             el.classList.add("reveal");
             observer.observe(el);
@@ -537,7 +518,7 @@
         document.addEventListener("mouseout", (e) => {
             const card = e.target.closest(".post-card");
             if (!card) return;
-            if (card.contains(e.relatedTarget)) return; // still moving within the same card
+            if (card.contains(e.relatedTarget)) return;
 
             card.classList.remove("is-tilting");
             card.style.transform = "";
@@ -568,7 +549,7 @@
         }
     }
 
-    /* ---------- Nav scroll-spy + sliding indicator ---------- */
+
     const navLinks = [...document.querySelectorAll(".nav-link")];
     const mobileNavLinksAll = [...document.querySelectorAll(".mobile-nav-link")];
     const siteNav = document.querySelector(".site-nav");
@@ -622,7 +603,7 @@
         };
 
         window.addEventListener("scroll", checkScrollEnd, {passive: true});
-        checkScrollEnd(); // schedule the first check immediately too
+        checkScrollEnd();
     }
 
     navLinks.forEach(link => {
@@ -671,7 +652,7 @@
         });
     }
 
-    /* ---------- Theme toggle ---------- */
+
     const themeToggle = document.getElementById("theme-toggle");
     const rootEl = document.documentElement;
 
@@ -690,7 +671,7 @@
         });
     }
 
-    /* ---------- Scroll progress bar ---------- */
+
     const scrollProgress = document.getElementById("scroll-progress");
 
     function updateScrollProgress() {
@@ -703,7 +684,7 @@
     window.addEventListener("scroll", updateScrollProgress, {passive: true});
     window.addEventListener("resize", updateScrollProgress);
 
-    /* ---------- Back to top ---------- */
+
     const backToTop = document.getElementById("back-to-top");
 
     window.addEventListener("scroll", () => {
@@ -716,7 +697,7 @@
         });
     }
 
-    /* ---------- Animated stat counters ---------- */
+
     function animateCounter(el) {
         const target = parseInt(el.dataset.target, 10) || 0;
         const suffix = el.dataset.suffix || "";
@@ -749,7 +730,7 @@
         }, {threshold: 0.4});
 
         stats.forEach(s => {
-            if (s.id === "blog-counter") return; // handled separately below, once data is ready
+            if (s.id === "blog-counter") return;
             observer.observe(s);
         });
 
@@ -771,7 +752,7 @@
         }
     }
 
-    /* ---------- Cursor glow in hero ---------- */
+
     const heroSection = document.querySelector(".hero");
     const cursorGlow = document.getElementById("cursor-glow");
 
@@ -783,7 +764,7 @@
         });
     }
 
-    /* ---------- Command palette (⌘K) ---------- */
+
     const cmdkData = [
         {title: "تازه‌ها", sub: "بازگشت به بالای صفحه", href: "#home"},
         {title: "بلاگ های اخیر", sub: "فهرست بلاگ‌ها", href: "#blogs"},

@@ -22,6 +22,7 @@ public class BlogShowDTO {
     private String imageAddress;
     private LocalDateTime creationDate;
     private LocalDateTime updateDate;
+    private LocalDateTime publishedDate;
 
     public int getId() {
         return id;
@@ -127,6 +128,14 @@ public class BlogShowDTO {
         this.slug = slug;
     }
 
+    public LocalDateTime getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(LocalDateTime publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
     public BlogShowDTO convertToDTO(Blog blog) {
         BlogShowDTO dto = new BlogShowDTO();
 
@@ -143,7 +152,7 @@ public class BlogShowDTO {
         dto.setViewCounter(blog.getViewCounter());
         dto.setStatus(blog.getStatus());
         dto.setSlug(blog.getSlug());
-
+        dto.setPublishedDate(blog.getPublishedDate());
         return dto;
     }
 }

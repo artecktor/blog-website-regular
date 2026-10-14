@@ -240,7 +240,7 @@
     function blogRow(blog, index = 0) {
         const readingTime = fa(Math.max(1, Math.ceil((blog.content || "").length / 1200)));
         const published = blog.status === "PUBLISHED";
-        const hasDate = blog.creationDate && !Number.isNaN(new Date(blog.creationDate).getTime());
+        const hasDate = blog.publishedDate && !Number.isNaN(new Date(blog.publishedDate).getTime());
         const tags = blog.tags || [];
         const shownTags = tags.slice(0, 3);
         const extra = tags.length - shownTags.length;
@@ -282,7 +282,7 @@
         </td>
         <td class="cell-byline">
             <span class="byline-name">${esc(blog.author)}</span>
-            <span class="byline-date">${hasDate ? dateFmt.format(new Date(blog.creationDate)) : "—"}</span>
+            <span class="byline-date">${hasDate ? dateFmt.format(new Date(blog.publishedDate)) : "—"}</span>
         </td>
         <td class="cell-status">
             <span class="state-pill ${published ? "is-published" : "is-draft"}">
@@ -356,11 +356,11 @@
         if (!targetSlug) return;
 
         const row = [...document.querySelectorAll("tr[data-slug]")].find(r => r.dataset.slug === targetSlug);
-        if (!row) return; // target user not in current filter (e.g. deleted, or wrong tab)
+        if (!row) return;
 
-        // restart animation cleanly even if called again (e.g. after role toggle)
+
         row.classList.remove("is-target");
-        void row.offsetWidth; // force reflow so the animation replays
+        void row.offsetWidth;
         row.classList.add("is-target");
 
         row.scrollIntoView({behavior: "smooth", block: "center"});
@@ -394,7 +394,7 @@
 </script>
 
 <script>
-    /* ---------- Theme toggle (same behavior as the main site) ---------- */
+
     const themeToggle = document.getElementById("theme-toggle");
     const rootEl = document.documentElement;
 
@@ -413,7 +413,7 @@
         });
     }
 
-    /* ---------- Command palette (⌘K), scoped to admin sections ---------- */
+
     const cmdkData = [
         {title: "پنل مدیریت", sub: "بازگشت به صفحه اصلی مدیریت", href: "http://localhost:8080/admin", external: true},
         {title: "بلاگها", sub: "نوشتن، ویرایش و انتشار بلاگها", href: "http://localhost:8080/admin/blogs", external: true},

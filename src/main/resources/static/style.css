@@ -1,4 +1,4 @@
-/* --------------------------------------------- Tokens --------------------------------------------- */
+
 :root {
     --cream: #F5F1EA;
     --cream-dim: #EEE8DD;
@@ -22,14 +22,14 @@
     --space-2xl: 72px;
 }
 
-/* ---------- Taxonomy: category + tags ---------- */
+
 :root {
     --tx-accent: var(--accent, #b9783a);
 }
 
 [hidden] { display: none !important; }
 
-/* Category badge */
+
 .post-category {
     position: relative;
     display: inline-flex;
@@ -58,7 +58,7 @@
     transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
 }
 
-/* Light sweep on hover */
+
 .post-category::before {
     content: "";
     position: absolute;
@@ -110,7 +110,7 @@
     50%      { transform: scale(.82) rotate(18deg); opacity: .75; }
 }
 
-/* Tags section */
+
 .post-taxonomy {
     max-width: var(--post-width, 720px);
     margin: 40px auto 0;
@@ -208,7 +208,7 @@
     .post-category::before { display: none; }
 }
 
-/* --------------------------------------------- Reset & base --------------------------------------------- */
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -260,7 +260,7 @@ img {
     white-space: nowrap;
 }
 
-/* --------------------------------------------- Ambient background --------------------------------------------- */
+
 body {
     position: relative;
     background: radial-gradient(circle at top right, rgba(255, 140, 90, .10), transparent 40%),
@@ -335,7 +335,7 @@ body {
     }
 }
 
-/* --------------------------------------------- Logo mark (signature element) — a small spark --------------------------------------------- */
+
 .logo-mark {
     width: 18px;
     height: 18px;
@@ -356,7 +356,7 @@ body {
     transform: rotate(90deg);
 }
 
-/* --------------------------------------------- Header --------------------------------------------- */ /* --------------------------------------------- Glass header --------------------------------------------- */
+
 .site-header {
     position: sticky;
     top: 18px;
@@ -374,7 +374,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    padding: 16px 28px; /* glass */
+    padding: 16px 28px;
     background: rgba(255, 255, 255, .18);
     border: 1px solid rgba(255, 255, 255, .42);
     backdrop-filter: blur(28px) saturate(180%);
@@ -458,7 +458,7 @@ body {
     flex-shrink: 0;
 }
 
-/* --------------------------------------------- Hamburger button --------------------------------------------- */
+
 .hamburger-btn {
     display: none;
     align-items: center;
@@ -534,7 +534,7 @@ body {
     transform: translateY(50%) rotate(-45deg);
 }
 
-/* --------------------------------------------- Mobile nav dropdown --------------------------------------------- */
+
 .mobile-nav-panel {
     position: fixed;
     top: 84px;
@@ -654,7 +654,7 @@ body.nav-open {
     overflow: hidden;
 }
 
-/* --------------------------------------------- Buttons --------------------------------------------- */
+
 .btn {
     font-family: var(--font-body);
     font-size: 0.9rem;
@@ -707,7 +707,7 @@ body.nav-open {
     background: var(--cream-dim);
 }
 
-/* Non-functional header buttons: visibly inert, not just disabled-gray */
+
 .header-actions .btn:disabled {
     opacity: 1;
     cursor: pointer;
@@ -722,7 +722,7 @@ body.nav-open {
     box-shadow: none;
 }
 
-/* --------------------------------------------- Hero --------------------------------------------- */
+
 .hero {
     padding: 96px 32px 72px;
 }
@@ -755,7 +755,7 @@ body.nav-open {
     margin-inline: auto;
 }
 
-/* --------------------------------------------- Featured post --------------------------------------------- */
+
 .featured {
     padding: 0 32px 88px;
 }
@@ -787,7 +787,7 @@ body.nav-open {
     max-width: 46ch;
 }
 
-/* --------------------------------------------- Post meta / links (shared) --------------------------------------------- */
+
 .post-meta {
     font-size: 0.8rem;
     font-weight: 500;
@@ -797,7 +797,7 @@ body.nav-open {
 
 .post-meta-row {
     display: flex;
-    align-items: center;          /* vertical alignment */
+    align-items: center;
     flex-wrap: wrap;
     gap: 12px 18px;
     margin-bottom: 18px;
@@ -826,7 +826,7 @@ body.nav-open {
     border-color: var(--terracotta-dk);
 }
 
-/* --------------------------------------------- Post grid --------------------------------------------- */
+
 .posts {
     max-width: 1120px;
     margin-inline: auto;
@@ -942,10 +942,10 @@ body.nav-open {
     margin-top: auto;
 }
 
-/* --------------------------------------------- Footer --------------------------------------------- */
+
 .site-footer {
     width: 100%;
-    margin-top: auto; /* pushes footer down */
+    margin-top: auto;
     flex-shrink: 0;
 
     background: var(--cream-dim);
@@ -1047,7 +1047,7 @@ body.nav-open {
     margin: 0;
 }
 
-/* --------------------------------------------- Blog post page --------------------------------------------- */
+
 .post-page {
     max-width: 760px;
     margin-inline: auto;
@@ -1167,7 +1167,7 @@ body.nav-open {
     font-family: inherit;
 }
 
-/* --------------------------------------------- Reviews --------------------------------------------- */
+
 .reviews {
     position: relative;
     padding: 32px 0 8px;
@@ -1337,7 +1337,7 @@ body.nav-open {
     transform: translateY(-2px);
 }
 
-/* Form column */
+
 .review-form {
     display: flex;
     flex-direction: column;
@@ -1421,9 +1421,9 @@ body.nav-open {
     gap: 6px;
     width: 100%;
 
-    background: transparent; /* remove container background */
-    border: none; /* remove container border */
-    padding: 0; /* remove extra spacing box feel */
+    background: transparent;
+    border: none;
+    padding: 0;
 }
 
 .star-rating input {
@@ -1463,7 +1463,7 @@ body.nav-open {
     margin-top: 4px;
 }
 
-/* --------------------------------------------- Related posts --------------------------------------------- */
+
 .related {
     max-width: 1120px;
     margin: 56px auto 0;
@@ -1584,11 +1584,7 @@ body.nav-open {
     }
 }
 
-/* ---------------------------------------------
-   Elegant page entrance + scroll reveal
---------------------------------------------- */
 
-/* Initial page load */
 body {
     animation: pageReveal .7s cubic-bezier(.22, .61, .36, 1);
 }
@@ -1613,7 +1609,6 @@ body {
     }
 }
 
-/* Elements that reveal while scrolling */
 .reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -1627,7 +1622,7 @@ body {
     transform: translateY(0);
 }
 
-/* Small stagger effect */
+
 .post-card:nth-child(1),
 .review-card:nth-child(1) {
     transition-delay: .05s;
@@ -1705,9 +1700,7 @@ body {
     }
 }
 
-/* ==========================
-   Glass Alert — Premium Motion
-========================== */
+
 
 .glass-overlay {
     position: fixed;
@@ -1731,7 +1724,7 @@ body {
     z-index: 9999;
 }
 
-/* opened state */
+
 .glass-overlay.is-open {
     opacity: 1;
     visibility: visible;
@@ -1758,7 +1751,7 @@ body {
 
     text-align: center;
 
-    /* initial hidden state */
+
     opacity: 0;
     transform: translateY(24px) scale(.94);
 
@@ -1769,7 +1762,7 @@ body {
     filter .45s cubic-bezier(.22, 1, .36, 1);
 }
 
-/* animate card separately */
+
 .glass-overlay.is-open .glass-alert {
     opacity: 1;
 
@@ -1778,7 +1771,7 @@ body {
     filter: blur(0);
 }
 
-/* close button */
+
 .glass-alert-close {
     position: absolute;
     top: 14px;
@@ -1837,7 +1830,7 @@ body {
     scroll-margin-top: 100px;
 }
 
-/* --------------------------------------------- Post card ambient glow --------------------------------------------- */
+
 .post-card-wrap {
     position: relative;
     isolation: isolate;
@@ -1847,7 +1840,7 @@ body {
 }
 
 .post-card-wrap > .post-card {
-    flex: 1 1 auto;           /* new: card fills the stretched wrap */
+    flex: 1 1 auto;
 }
 
 .post-card-wrap.is-last-odd {
@@ -1889,12 +1882,9 @@ body {
     }
 }
 
-/* =========================================================================
-   NEW FEATURES: dark mode, command palette, scroll progress, back-to-top,
-   stat counters, notes section, about section, cursor glow, scroll cue
-   ========================================================================= */
 
-/* --------------------------------------------- Scroll progress bar --------------------------------------------- */
+
+
 .scroll-progress {
     position: fixed;
     top: 0;
@@ -1913,7 +1903,7 @@ body {
     }
 }
 
-/* --------------------------------------------- Search trigger --------------------------------------------- */
+
 .search-trigger {
     display: flex;
     align-items: center;
@@ -1954,7 +1944,7 @@ body {
     font-family: var(--font-body);
 }
 
-/* --------------------------------------------- Theme toggle --------------------------------------------- */
+
 .theme-toggle {
     position: relative;
     display: flex;
@@ -2008,7 +1998,7 @@ html[data-theme="dark"] .theme-icon-moon {
     stroke: var(--terracotta);
 }
 
-/* --------------------------------------------- Back to top --------------------------------------------- */
+
 .back-to-top {
     position: fixed;
     bottom: 28px;
@@ -2059,7 +2049,7 @@ html[data-theme="dark"] .theme-icon-moon {
     }
 }
 
-/* --------------------------------------------- Command palette --------------------------------------------- */
+
 .cmdk-overlay {
     position: fixed;
     inset: 0;
@@ -2199,7 +2189,7 @@ html[data-theme="dark"] .theme-icon-moon {
     margin: 0;
 }
 
-/* --------------------------------------------- Stats section --------------------------------------------- */
+
 .stats {
     max-width: 1120px;
     margin: 0 auto 88px;
@@ -2253,7 +2243,7 @@ html[data-theme="dark"] .theme-icon-moon {
     }
 }
 
-/* --------------------------------------------- Notes section --------------------------------------------- */
+
 .notes {
     max-width: 1120px;
     margin-inline: auto;
@@ -2324,7 +2314,7 @@ html[data-theme="dark"] .theme-icon-moon {
     }
 }
 
-/* --------------------------------------------- About section --------------------------------------------- */
+
 .about {
     max-width: 1120px;
     margin: 0 auto 96px;
@@ -2468,7 +2458,7 @@ html[data-theme="dark"] .theme-icon-moon {
     }
 }
 
-/* --------------------------------------------- Hero cursor glow + scroll cue --------------------------------------------- */
+
 .hero {
     position: relative;
     overflow: hidden;
@@ -2565,7 +2555,7 @@ html[data-theme="dark"] .theme-icon-moon {
     }
 }
 
-/* --------------------------------------------- Dark mode --------------------------------------------- */
+
 html[data-theme="dark"] {
     --cream: #201C18;
     --cream-dim: #17130F;
@@ -2725,9 +2715,7 @@ html * {
 
 
 
-/* =====================================================================
-    Category page — built on top of style.css tokens
-    ===================================================================== */
+
 :root {
     --g-bg: rgba(255, 255, 255, .28);
     --g-bg-strong: rgba(255, 255, 255, .55);
@@ -2754,7 +2742,7 @@ html[data-theme="dark"] {
     box-shadow: var(--g-shadow);
 }
 
-/* ---------- Hero ---------- */
+
 .cat-hero {
     padding: 80px 32px 44px;
     text-align: center;
@@ -2792,7 +2780,7 @@ html[data-theme="dark"] {
     opacity: .6;
 }
 
-/* Search */
+
 .search-box {
     position: relative;
     display: flex;
@@ -2848,7 +2836,7 @@ html[data-theme="dark"] {
 }
 
 .search-box input[type="search"]::-ms-clear {
-    display: none; /* old Edge */
+    display: none;
 }
 
 .search-box input::placeholder {
@@ -2898,7 +2886,7 @@ html[data-theme="dark"] {
     display: none;
 }
 
-/* ---------- Layout ---------- */
+
 .cat-layout {
     max-width: 1180px;
     margin-inline: auto;
@@ -2909,7 +2897,7 @@ html[data-theme="dark"] {
     align-items: start;
 }
 
-/* ---------- Sidebar ---------- */
+
 .cat-sidebar {
     position: sticky;
     top: 108px;
@@ -3093,7 +3081,7 @@ html[data-theme="dark"] {
     color: #fff;
 }
 
-/* ---------- Main column ---------- */
+
 .cat-main {
     min-width: 0;
 }
@@ -3197,7 +3185,7 @@ html[data-theme="dark"] {
     box-shadow: 0 6px 14px rgba(217, 119, 87, .4);
 }
 
-/* Active filter chips */
+
 .active-filters {
     display: flex;
     flex-wrap: wrap;
@@ -3269,7 +3257,7 @@ html[data-theme="dark"] {
     }
 }
 
-/* ---------- Cards (extends .post-card from style.css) ---------- */
+
 .cat-main .post-grid {
     gap: 28px;
 }
@@ -3386,7 +3374,7 @@ mark {
     color: inherit;
 }
 
-/* List view */
+
 @media (min-width: 700px) {
     .cat-main .post-grid.is-list {
         grid-template-columns: minmax(0, 1fr);
@@ -3412,7 +3400,7 @@ mark {
     }
 }
 
-/* ---------- Load more ---------- */
+
 .load-more-wrap {
     margin-top: 40px;
     text-align: center;
@@ -3423,7 +3411,7 @@ mark {
     font-family: var(--font-body);
 }
 
-/* ---------- Empty / error ---------- */
+
 .state-card {
     display: flex;
     flex-direction: column;
@@ -3466,7 +3454,7 @@ mark {
     color: var(--ink-soft);
 }
 
-/* ---------- Skeleton ---------- */
+
 .sk-card {
     position: relative;
     overflow: hidden;
@@ -3513,7 +3501,6 @@ html[data-theme="dark"] .sk-card::after {
     }
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 1000px) {
     .cat-layout {
         grid-template-columns: minmax(0, 1fr);
@@ -3591,7 +3578,7 @@ html[data-theme="dark"] .sk-card::after {
         animation: none;
     }
 }
-/* Cream backing lives on the card itself, so it moves with the tilt */
+
 .post-card {
     background:
             linear-gradient(rgba(255, 255, 255, .22), rgba(255, 255, 255, .22)),

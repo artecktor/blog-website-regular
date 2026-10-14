@@ -237,11 +237,10 @@
 </footer>
 
 <script>
-    // /admin/blog-edit/{slug} = edit an existing blog, /admin/blog-edit = new blog
     const urlParts = window.location.pathname.split("/").filter(Boolean);
     const editSlug = urlParts.length > 2 ? decodeURIComponent(urlParts[2]) : null;
 
-    // The values must match your Status enum. Change them here if yours are different.
+
     const STATUS_OPTIONS = [
         {value: "DRAFT", label: "پیش‌نویس"},
         {value: "PUBLISHED", label: "منتشر شده"}
@@ -263,9 +262,7 @@
     let selectedTagIds = [];
     let slugWasEditedByHand = false;
 
-    /* =====================================================
-       Small helpers
-    ===================================================== */
+
 
     function findById(list, id) {
         for (let i = 0; i < list.length; i++) {
@@ -294,9 +291,7 @@
             .replace(/^-|-$/g, "");
     }
 
-    /* =====================================================
-       Loading categories and tags
-    ===================================================== */
+
 
     async function loadCategoriesAndTags() {
         let categories = [];
@@ -320,7 +315,7 @@
         } catch (error) {
         }
 
-        // If those endpoints don't exist, use the categories and tags that existing blogs already have.
+
         if (categories.length === 0 || tags.length === 0) {
             const categoriesFromBlogs = [];
             const tagsFromBlogs = [];
@@ -349,9 +344,7 @@
         allTags = tags;
     }
 
-    /* =====================================================
-       Rendering the form controls
-    ===================================================== */
+
 
     function renderCategoryOptions() {
         const previousValue = categorySelect.value;
@@ -446,7 +439,7 @@
         updatePreview();
     }
 
-    // Each selected tag becomes a hidden field: tags[0].id, tags[1].id, ...
+
     function rebuildTagInputs() {
         const container = document.getElementById("tag-inputs");
         container.innerHTML = "";
@@ -460,9 +453,7 @@
         }
     }
 
-    /* =====================================================
-       Live preview
-    ===================================================== */
+
 
     function updatePreview() {
         document.getElementById("pv-title").innerText = fTitle.value || "عنوان بلاگ";
@@ -477,7 +468,7 @@
         const readingTime = content ? Math.ceil(content.length / 1200) : 0;
         document.getElementById("pv-time").innerText = readingTime.toLocaleString("fa-IR");
 
-        // Category badge
+
         const selectedCategory = findById(allCategories, categorySelect.value);
         const categoryBadge = document.getElementById("pv-category");
 
@@ -488,7 +479,7 @@
             categoryBadge.hidden = true;
         }
 
-        // Tags box
+
         const tagList = document.getElementById("pv-tags");
         tagList.innerHTML = "";
 
@@ -505,7 +496,7 @@
 
         document.getElementById("pv-taxonomy").hidden = tagList.children.length === 0;
 
-        // Status in the preview label
+
         let statusLabel = "";
         for (let i = 0; i < STATUS_OPTIONS.length; i++) {
             if (STATUS_OPTIONS[i].value === statusInput.value) {
@@ -522,11 +513,9 @@
     categorySelect.addEventListener("change", updatePreview);
     tagSearchInput.addEventListener("input", renderTagOptions);
 
-    /* =====================================================
-       Slug
-    ===================================================== */
 
-    // Follow the title until the slug is typed by hand.
+
+
     fTitle.addEventListener("input", function () {
         if (!slugWasEditedByHand) {
             slugInput.value = makeSlug(fTitle.value);
@@ -534,7 +523,7 @@
     });
 
     slugInput.addEventListener("input", function () {
-        // Clearing the field lets it follow the title again.
+
         slugWasEditedByHand = slugInput.value.trim() !== "";
     });
 
@@ -543,9 +532,7 @@
         slugWasEditedByHand = false;
     });
 
-    /* =====================================================
-       Loading an existing blog (edit mode)
-    ===================================================== */
+
 
     async function loadExistingBlog() {
         if (!editSlug) {
@@ -562,7 +549,7 @@
         }
         const blog = await res.json();
 
-        // The URL only carries the slug, but saving needs the numeric id so the existing row is updated.
+
         document.getElementById("f-id").value = blog.id;
 
         fTitle.value = blog.title || "";
@@ -585,15 +572,13 @@
         }
     }
 
-    /* =====================================================
-       Saving
-    ===================================================== */
+
 
     document.getElementById("blog-form").addEventListener("submit", function () {
-        // The category field is only sent when one is chosen, so "no category" does not become a blank id.
+
         categorySelect.name = categorySelect.value ? "category.id" : "";
 
-        // The slug is required by the database, so never send it empty.
+
         if (slugInput.value.trim() === "") {
             slugInput.value = makeSlug(fTitle.value) || "post-" + Date.now();
         }
@@ -605,9 +590,7 @@
         e.target.innerText = hidden ? "نمایش پیش‌نمایش" : "پنهان کردن پیش‌نمایش";
     });
 
-    /* =====================================================
-       Start
-    ===================================================== */
+
 
     async function startEditor() {
         await loadCategoriesAndTags();
@@ -626,7 +609,7 @@
 </script>
 
 <script>
-    /* ---------- Theme toggle (same behavior as the main site) ---------- */
+
     const themeToggle = document.getElementById("theme-toggle");
     const rootEl = document.documentElement;
 
@@ -645,7 +628,7 @@
         });
     }
 
-    /* ---------- Command palette (⌘K), scoped to admin sections ---------- */
+
     const cmdkData = [
         {title: "پنل مدیریت", sub: "بازگشت به صفحه اصلی مدیریت", href: "http://localhost:8080/admin", external: true},
         {title: "بلاگها", sub: "نوشتن، ویرایش و انتشار بلاگها", href: "http://localhost:8080/admin/blogs", external: true},

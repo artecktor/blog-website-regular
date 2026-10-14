@@ -46,16 +46,7 @@ public class PageController {
         return "home";
     }
 
-//    @GetMapping("/blog")
-//    public String blog(int id, Model model) {
-//        Blog blog = blogService.findById(id);
-//
-//        blogService.incrementViewCounter(id);
-//
-//        model.addAttribute("blog", blog);
-//
-//        return "blog";
-//    }
+
 
     @GetMapping("/blog/{slug}")
     public String blog(@PathVariable String slug, Model model) {
@@ -92,28 +83,7 @@ public class PageController {
     }
 
 
-//    @PostMapping("/login")
-//    public String login(
-//            String email,
-//            String password,
-//            RedirectAttributes redirectAttributes
-//    ) {
-//
-//        ApplicationUser user =
-//                applicationUserService.findByEmailAndPassword(email, password);
-//
-//        if (user == null) {
-//
-//            redirectAttributes.addFlashAttribute(
-//                    "loginError",
-//                    "ایمیل یا رمز عبور اشتباه است"
-//            );
-//
-//            return "redirect:/login";
-//        }
-//
-//        return "redirect:/";
-//    }
+
 
     @GetMapping("/login")
     public String login() {
@@ -135,8 +105,6 @@ public class PageController {
         return "adminBlog";
     }
 
-    // /admin/blog-edit        -> new blog
-    // /admin/blog-edit/{slug} -> edit an existing blog (the page reads the slug from the URL)
     @GetMapping({"/admin/blog-edit", "/admin/blog-edit/{slug}"})
     public String adminBlogEdit() {
         return "adminBlogEdit";
@@ -152,25 +120,6 @@ public class PageController {
         return "admin";
     }
 
-//    @PostMapping("/comments/save")
-//    public String saveFromForm(CommentSaveDTO dto) {
-//        Comment comment = dto.convertToComment();
-//
-//        Blog blog = blogService.findById(dto.getBlogId());
-//
-//        ApplicationUser user =
-//                applicationUserService.findByEmailAndPassword(
-//                        dto.getEmail(),
-//                        dto.getPassword()
-//                );
-//
-//        comment.setBlog(blog);
-//        comment.setUser(user);
-//
-//        commentService.save(comment);
-//
-//        return "redirect:/blog?id=" + blog.getId();
-//    }
 
     @PostMapping("/comments/save")
     public String saveFromForm(CommentSaveDTO dto) {

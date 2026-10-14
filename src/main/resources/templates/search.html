@@ -280,22 +280,18 @@
 </button>
 
 <script>
-    /* =====================================================================
-       Config — adjust these to match your backend
-       ===================================================================== */
+
     const API = "http://localhost:8080";
     const ENDPOINTS = {
         allBlogs: () => `${API}/blogs`,
-        // Your findByCategory endpoint. Receives the category object ({id, name, slug}).
+
         byCategory: (cat) => `${API}/blogs/search/${cat.id}`,
-        // Optional: lets empty categories show up too. Set to null if you don't have it.
+
         categories: () => `${API}/categories`,
     };
     const PAGE_SIZE = 6;
 
-    /* =====================================================================
-       State
-       ===================================================================== */
+
     const state = {
         all: [],
         categories: [],
@@ -316,9 +312,6 @@
     const fa = (n) => Number(n).toLocaleString("fa-IR");
     const keyOf = (o) => String(o.slug ?? o.id ?? o.name);
 
-    /* =====================================================================
-       Text helpers (Persian-aware search)
-       ===================================================================== */
     function esc(str) {
         return String(str ?? "").replace(/[&<>"']/g, ch => ({
             "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -329,7 +322,7 @@
         return String(u ?? "").replace(/['"()\s]/g, c => encodeURIComponent(c));
     }
 
-    // Length-preserving normalisation so match indexes line up with the original text.
+
     function normalize(s) {
         return String(s ?? "").replace(/[\u064A\u0643\u0649\u06C0\u0629\u200c\u0640\u06F0-\u06F9\u0660-\u0669]/g, ch => {
             const c = ch.charCodeAt(0);
@@ -377,9 +370,7 @@
         return Number.isNaN(t) ? (b.id || 0) : t;
     };
 
-    /* =====================================================================
-       Data
-       ===================================================================== */
+
     async function loadData() {
         renderSkeleton();
         try {
@@ -432,7 +423,7 @@
     const currentCategory = () => state.categories.find(c => c.key === state.categoryKey) || null;
     const currentTag = () => state.tags.find(t => t.key === state.tagKey) || null;
 
-    // Uses your findByCategory endpoint; falls back to filtering locally if it fails.
+
     async function getSource() {
         const cat = currentCategory();
         if (!cat) return state.all;
@@ -478,9 +469,7 @@
         return list;
     }
 
-    /* =====================================================================
-       Update pipeline
-       ===================================================================== */
+
     async function update({append = false} = {}) {
         const token = ++state.token;
         const cat = currentCategory();
@@ -488,7 +477,7 @@
         if (cat && !state.cache.has(cat.key)) renderSkeleton();
 
         const source = await getSource();
-        if (token !== state.token) return; // a newer update superseded this one
+        if (token !== state.token) return;
 
         state.results = compute(source);
         renderMeta();
@@ -502,9 +491,7 @@
         state.visible = PAGE_SIZE;
     }
 
-    /* =====================================================================
-       Rendering
-       ===================================================================== */
+
     function renderHeroStats() {
         $("stat-posts").textContent = fa(state.all.length);
         $("stat-cats").textContent = fa(state.categories.length);
@@ -665,9 +652,7 @@
         });
     }
 
-    /* =====================================================================
-       URL <-> state
-       ===================================================================== */
+
     function readURL() {
         const p = new URLSearchParams(location.search);
         const find = (list, v) => v && (list.find(o => [o.key, o.slug, o.name, String(o.id)].includes(v)) || {}).key || null;
@@ -694,9 +679,7 @@
         $("sort-select").value = state.sort;
     }
 
-    /* =====================================================================
-       Events
-       ===================================================================== */
+
     function setCategory(key) {
         state.categoryKey = key && key !== state.categoryKey ? key : null;
         resetPaging();
@@ -709,7 +692,7 @@
         update();
     }
 
-    // One delegated listener for every filter button on the page
+
     document.addEventListener("click", (e) => {
         const catBtn = e.target.closest("[data-cat]");
         if (catBtn) {
@@ -750,7 +733,7 @@
         }
     });
 
-    // Search (debounced)
+
     const searchInput = $("search-input");
     let searchTimer;
     searchInput.addEventListener("input", () => {
@@ -777,7 +760,7 @@
         }
     });
 
-    // Quick focus: "/" and Ctrl/Cmd+K, plus the header search button
+
     function focusSearch() {
         window.scrollTo({top: 0, behavior: "smooth"});
         setTimeout(() => searchInput.focus(), 150);
@@ -795,7 +778,7 @@
     });
     $("search-trigger").addEventListener("click", focusSearch);
 
-    // Sort / view / load more
+
     $("sort-select").addEventListener("change", (e) => {
         state.sort = e.target.value;
         resetPaging();
@@ -816,9 +799,7 @@
         renderResults(true);
     });
 
-    /* =====================================================================
-       Shared chrome (same behaviour as the other pages)
-       ===================================================================== */
+
     const hamburgerBtn = $("hamburger-btn");
     const mobileNavPanel = $("mobile-nav-panel");
 
@@ -866,7 +847,7 @@
     }, {passive: true});
     backToTop.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
 
-    // Card tilt (same effect as the home page)
+
     (function initCardTilt() {
         if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

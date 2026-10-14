@@ -1,6 +1,4 @@
-/* ---------------------------------------------
-   Tokens (matching site brand)
---------------------------------------------- */
+
 :root {
     --cream: #F5F1EA;
     --ink: #2B2621;
@@ -76,9 +74,7 @@ a {
     }
 }
 
-/* ---------------------------------------------
-   Ambient background — soft blurred color fields
---------------------------------------------- */
+
 .ambient {
     position: fixed;
     inset: 0;
@@ -87,9 +83,7 @@ a {
     pointer-events: none;
 }
 
-/* ---------------------------------------------
-   Ambient background — balanced midpoint
---------------------------------------------- */
+
 
 .blob {
     position: absolute;
@@ -146,7 +140,7 @@ a {
     animation-delay: -12s;
 }
 
-/* subtle page-wide warmth */
+
 body {
     background: radial-gradient(
             circle at top right,
@@ -171,9 +165,7 @@ body {
     }
 }
 
-/* ---------------------------------------------
-   Layout
---------------------------------------------- */
+
 .auth-wrap {
     position: relative;
     z-index: 1;
@@ -217,9 +209,7 @@ body {
     box-shadow .2s var(--ease);
 }
 
-/* ---------------------------------------------
-   Glass card
---------------------------------------------- */
+
 .auth-card {
     width: 100%;
     max-width: 420px;
@@ -253,9 +243,6 @@ body {
     font-weight: 400;
 }
 
-/* ---------------------------------------------
-   Form
---------------------------------------------- */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -364,23 +351,21 @@ body {
     color: rgba(92, 85, 76, 0.55);
 }
 
-/* =========================================
-   CLEAN PREMIUM FOCUS STATE (FIXED)
-========================================= */
+
 
 .form-field input,
 .password-field input {
     transition: all 0.22s var(--ease);
 }
 
-/* REMOVE default browser glow completely */
+
 .form-field input:focus,
 .password-field input:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* custom clean focus (no orange glow bleed) */
+
 .form-field input:focus-visible,
 .password-field input:focus-visible {
     border-color: rgba(217, 119, 87, 0.55);
@@ -454,9 +439,7 @@ body {
     cursor: pointer;
 }
 
-/* ---------------------------------------------
-   Buttons
---------------------------------------------- */
+
 .btn-auth-primary {
     font-family: var(--font-body);
     font-size: 0.98rem;
@@ -526,9 +509,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* ---------------------------------------------
-   Switch line
---------------------------------------------- */
+
 .auth-switch {
     text-align: center;
     font-size: 0.88rem;
@@ -546,9 +527,7 @@ body {
     color: var(--terracotta);
 }
 
-/* ---------------------------------------------
-   Responsive
---------------------------------------------- */
+
 @media (max-width: 480px) {
     .auth-card {
         padding: 32px 24px 26px;
@@ -611,7 +590,7 @@ body {
     z-index: 9999;
 }
 
-/* opened state */
+
 .glass-overlay.is-open {
     opacity: 1;
     visibility: visible;
@@ -638,7 +617,7 @@ body {
 
     text-align: center;
 
-    /* initial hidden state */
+
     opacity: 0;
     transform: translateY(24px) scale(.94);
 
@@ -649,7 +628,7 @@ body {
     filter .45s cubic-bezier(.22, 1, .36, 1);
 }
 
-/* animate card separately */
+
 .glass-overlay.is-open .glass-alert {
     opacity: 1;
 
@@ -658,7 +637,7 @@ body {
     filter: blur(0);
 }
 
-/* close button */
+
 .glass-alert-close {
     position: absolute;
     top: 14px;

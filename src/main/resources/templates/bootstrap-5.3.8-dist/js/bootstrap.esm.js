@@ -232,7 +232,7 @@ const isRTL = () => document.documentElement.dir === 'rtl';
 const defineJQueryPlugin = plugin => {
   onDOMContentLoaded(() => {
     const $ = getjQuery();
-    /* istanbul ignore if */
+
     if ($) {
       const name = plugin.NAME;
       const JQUERY_NO_CONFLICT = $.fn[name];
@@ -1999,8 +1999,7 @@ class Dropdown extends BaseComponent {
     }
   }
   static dataApiKeydownHandler(event) {
-    // If not an UP | DOWN | ESCAPE key => not a dropdown command
-    // If input/textarea && if key is other than ESCAPE => not a dropdown command
+
 
     const isInput = /input|textarea/i.test(event.target.tagName);
     const isEscapeEvent = event.key === ESCAPE_KEY$2;
