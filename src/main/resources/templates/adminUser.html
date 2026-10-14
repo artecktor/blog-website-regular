@@ -123,6 +123,7 @@
                     <tr>
                         <th class="col-check"><input type="checkbox" class="select-all-check" id="select-all"></th>
                         <th class="col-author" style="padding-right:24px;">کاربر</th>
+                        <th class="col-comment">نام کامل</th>
                         <th class="col-comment">ایمیل</th>
                         <th class="col-post">رمز عبور</th>
                         <th class="col-post">آدرس</th>
@@ -262,6 +263,7 @@
                 <a class="author-name">${user.username}</a>
             </div>
         </td>
+        <td class="cell-comment">${user.fullname ?? user.fullName ?? '—'}</td>
         <td class="cell-comment">${user.email}</td>
         <td class="cell-post" dir="ltr">${user.password}</td>
         <td class="cell-post">${user.address ?? '—'}</td>
@@ -372,7 +374,7 @@
 </script>
 
 <script>
-    /* ---------- Theme toggle (same behavior as the main site) ---------- */
+
     const themeToggle = document.getElementById("theme-toggle");
     const rootEl = document.documentElement;
 
@@ -391,7 +393,7 @@
         });
     }
 
-    /* ---------- Command palette (⌘K), scoped to admin sections ---------- */
+
     const cmdkData = [
         {title: "پنل مدیریت", sub: "بازگشت به صفحه اصلی مدیریت", href: "http://localhost:8080/admin", external: true},
         {title: "بلاگها", sub: "نوشتن، ویرایش و انتشار بلاگها", href: "http://localhost:8080/admin/blogs", external: true},
